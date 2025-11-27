@@ -3,7 +3,6 @@
 
 **PluginBuild** is a lightweight and powerful tool designed to fully automate the building, packaging, and exporting of Unreal Engine plugins. Whether you are targeting a single engine version or several, PluginBuild streamlines your workflow and generates clean, ready-to-publish folders for Fab (formerly Unreal Marketplace).
 
----
 
 ## ✨ Key Features
 
@@ -14,8 +13,6 @@
 - ⚙️ **Fast, clean, and user-friendly interface**  
 - 🧩 Compatible with all plugin types (Blueprint, C++, hybrid) 
 
----
-
 ## 🎯 Why PluginBuild?
 
 - Save a huge amount of time on each update  
@@ -23,13 +20,9 @@
 - Automate your entire workflow  
 - Standardize your output for Fab or client delivery  
 
----
-
 ## 📥 Installation
 
 Download the latest version from the **Releases** section and launch **PluginBuild**.
-
----
 
 ## 📚 Usage
 
@@ -38,8 +31,6 @@ Download the latest version from the **Releases** section and launch **PluginBui
 3. Click **Build**  
 4. Retrieve your clean, ready-to-publish output folder  
 
----
-
 ## 🛠 Roadmap
 
 - Parallel build support  
@@ -47,7 +38,6 @@ Download the latest version from the **Releases** section and launch **PluginBui
 - Automatic ZIP export  
 - Custom build presets  
 
----
 
 ## 📄 License
 
