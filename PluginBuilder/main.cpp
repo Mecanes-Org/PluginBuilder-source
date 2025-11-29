@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
 
     // 3) Fenêtre principale
-    MainWindow w;
+    MainWindow w;/*
 
     // &loading, &w; { ... }
     // - C’est une lambda (fonction anonyme C++).
@@ -38,7 +38,10 @@ int main(int argc, char *argv[])
                          w.show();
                      });
 
-    loading.show();
+    loading.show();*/
+
+
+    w.show();
 
     return app.exec();
 }

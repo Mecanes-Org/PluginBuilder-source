@@ -492,10 +492,16 @@
    </palette>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Plugin Builder</string>
+  </property>
+  <property name="windowIcon">
+   <iconset theme="QIcon::ThemeIcon::WeatherClear"/>
   </property>
   <property name="styleSheet">
    <string notr="true">background-color: #030712;</string>
+  </property>
+  <property name="documentMode">
+   <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -511,7 +517,7 @@
         </property>
         <property name="maximumSize">
          <size>
-          <width>16777215</width>
+          <width>200</width>
           <height>16777215</height>
          </size>
         </property>
@@ -522,17 +528,13 @@
     border: 1px solid #4198EF;
 }
 
-
 QCheckBox::indicator:checked{
-	
 	image: url(:/resources/images/check-icon.png);
-	
 }
 
 QCheckBox::indicator:disabled{
 	
-	image: url(:/resources/images/check-disabled-icon.png);
-	
+	border: 1px solid rgb(58, 58, 58);
 }</string>
         </property>
         <property name="frameShape">
@@ -545,7 +547,7 @@ QCheckBox::indicator:disabled{
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <property name="spacing">
-            <number>10</number>
+            <number>5</number>
            </property>
            <item>
             <widget class="QLabel" name="label">
@@ -565,7 +567,10 @@ QCheckBox::indicator:disabled{
               <string>Unreal Versions</string>
              </property>
              <property name="alignment">
-              <set>Qt::AlignmentFlag::AlignCenter</set>
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+             </property>
+             <property name="margin">
+              <number>0</number>
              </property>
             </widget>
            </item>
@@ -595,186 +600,255 @@ QCheckBox::indicator:disabled{
              <property name="title">
               <string>UE5</string>
              </property>
-             <widget class="QWidget" name="layoutWidget">
-              <property name="geometry">
-               <rect>
-                <x>20</x>
-                <y>30</y>
-                <width>131</width>
-                <height>48</height>
-               </rect>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <property name="spacing">
+               <number>0</number>
               </property>
-              <layout class="QVBoxLayout" name="verticalLayout_3">
-               <item>
-                <widget class="QCheckBox" name="checkBox_UE_5_4">
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>20</height>
-                  </size>
+              <property name="sizeConstraint">
+               <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+              </property>
+              <property name="leftMargin">
+               <number>0</number>
+              </property>
+              <property name="topMargin">
+               <number>0</number>
+              </property>
+              <property name="rightMargin">
+               <number>0</number>
+              </property>
+              <property name="bottomMargin">
+               <number>0</number>
+              </property>
+              <item>
+               <widget class="QScrollArea" name="scrollArea">
+                <property name="styleSheet">
+                 <string notr="true">border: none;</string>
+                </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_UE5">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>164</width>
+                   <height>55</height>
+                  </rect>
                  </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>80</width>
-                   <height>20</height>
-                  </size>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
                  </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>UE_5.4</string>
-                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <property name="spacing">
+                   <number>5</number>
+                  </property>
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+                  </property>
+                  <property name="leftMargin">
+                   <number>10</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>10</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_UE_5_4">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>80</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>80</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="text">
+                     <string>UE_5.4</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QCheckBox" name="checkBox_UE_5_5">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>80</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>80</width>
+                      <height>20</height>
+                     </size>
+                    </property>
+                    <property name="palette">
+                     <palette>
+                      <active>
+                       <colorrole role="Button">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Base">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Window">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Highlight">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>31</red>
+                          <green>155</green>
+                          <blue>93</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </active>
+                      <inactive>
+                       <colorrole role="Button">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Base">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Window">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Highlight">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>31</red>
+                          <green>155</green>
+                          <blue>93</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </inactive>
+                      <disabled>
+                       <colorrole role="Button">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Base">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Window">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>3</red>
+                          <green>7</green>
+                          <blue>18</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                       <colorrole role="Highlight">
+                        <brush brushstyle="SolidPattern">
+                         <color alpha="255">
+                          <red>31</red>
+                          <green>155</green>
+                          <blue>93</blue>
+                         </color>
+                        </brush>
+                       </colorrole>
+                      </disabled>
+                     </palette>
+                    </property>
+                    <property name="cursor">
+                     <cursorShape>PointingHandCursor</cursorShape>
+                    </property>
+                    <property name="text">
+                     <string>UE_5.5</string>
+                    </property>
+                    <property name="checkable">
+                     <bool>true</bool>
+                    </property>
+                    <property name="checked">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
                 </widget>
-               </item>
-               <item>
-                <widget class="QCheckBox" name="checkBox_UE_5_5">
-                 <property name="minimumSize">
-                  <size>
-                   <width>80</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>80</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                 <property name="palette">
-                  <palette>
-                   <active>
-                    <colorrole role="Button">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Base">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Window">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Highlight">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>31</red>
-                       <green>155</green>
-                       <blue>93</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </active>
-                   <inactive>
-                    <colorrole role="Button">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Base">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Window">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Highlight">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>31</red>
-                       <green>155</green>
-                       <blue>93</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </inactive>
-                   <disabled>
-                    <colorrole role="Button">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Base">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Window">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>3</red>
-                       <green>7</green>
-                       <blue>18</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                    <colorrole role="Highlight">
-                     <brush brushstyle="SolidPattern">
-                      <color alpha="255">
-                       <red>31</red>
-                       <green>155</green>
-                       <blue>93</blue>
-                      </color>
-                     </brush>
-                    </colorrole>
-                   </disabled>
-                  </palette>
-                 </property>
-                 <property name="cursor">
-                  <cursorShape>PointingHandCursor</cursorShape>
-                 </property>
-                 <property name="text">
-                  <string>UE_5.5</string>
-                 </property>
-                 <property name="checkable">
-                  <bool>true</bool>
-                 </property>
-                 <property name="checked">
-                  <bool>false</bool>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </widget>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
            <item>
@@ -830,9 +904,21 @@ QCheckBox::indicator:disabled{
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">QLabel#label_pluginPath{
+              <string notr="true">QFrame{
+	background-color: #0F172B;
+}
+
+QLabel#label_pluginPath{
 	border: 1px solid #E7E5E4 ;
 	border-radius: 2px;
+}
+
+QPushButton{ 
+	background-color: #1D293D;
+}
+
+QPushButton:disabled{ 
+	background-color: #0F172B; 
 }</string>
              </property>
              <property name="frameShape">
@@ -873,12 +959,16 @@ QCheckBox::indicator:disabled{
                  <widget class="QLabel" name="label_pluginPath">
                   <property name="font">
                    <font>
-                    <pointsize>15</pointsize>
+                    <pointsize>12</pointsize>
                     <bold>false</bold>
                    </font>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true">border-color: rgb(115, 115, 115);
+background-color: #1D293D;</string>
+                  </property>
                   <property name="text">
-                   <string notr="true">...</string>
+                   <string notr="true">Plugin link</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::AutoText</enum>
@@ -921,6 +1011,12 @@ QCheckBox::indicator:disabled{
                   <property name="icon">
                    <iconset theme="QIcon::ThemeIcon::EditFind"/>
                   </property>
+                  <property name="iconSize">
+                   <size>
+                    <width>25</width>
+                    <height>25</height>
+                   </size>
+                  </property>
                   <property name="autoDefault">
                    <bool>false</bool>
                   </property>
@@ -929,7 +1025,7 @@ QCheckBox::indicator:disabled{
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton">
+               <widget class="QPushButton" name="pushButton_build">
                 <property name="minimumSize">
                  <size>
                   <width>80</width>
@@ -942,8 +1038,20 @@ QCheckBox::indicator:disabled{
                   <height>50</height>
                  </size>
                 </property>
+                <property name="cursor">
+                 <cursorShape>PointingHandCursor</cursorShape>
+                </property>
                 <property name="text">
                  <string>Build</string>
+                </property>
+                <property name="icon">
+                 <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
+                </property>
+                <property name="iconSize">
+                 <size>
+                  <width>25</width>
+                  <height>25</height>
+                 </size>
                 </property>
                </widget>
               </item>
@@ -961,8 +1069,11 @@ QCheckBox::indicator:disabled{
              <property name="maximumSize">
               <size>
                <width>760</width>
-               <height>380</height>
+               <height>16777215</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">background-color: #0F172B;</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -970,11 +1081,35 @@ QCheckBox::indicator:disabled{
              <property name="frameShadow">
               <enum>QFrame::Shadow::Raised</enum>
              </property>
-             <layout class="QVBoxLayout" name="verticalLayout_7">
+             <layout class="QVBoxLayout" name="verticalLayout_7" stretch="0">
+              <property name="spacing">
+               <number>0</number>
+              </property>
+              <property name="leftMargin">
+               <number>5</number>
+              </property>
+              <property name="topMargin">
+               <number>5</number>
+              </property>
+              <property name="rightMargin">
+               <number>5</number>
+              </property>
+              <property name="bottomMargin">
+               <number>5</number>
+              </property>
               <item>
                <widget class="QLabel" name="label_log">
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
                 <property name="text">
-                 <string>TextLabel</string>
+                 <string>Log</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+                <property name="wordWrap">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>
@@ -1000,20 +1135,48 @@ QCheckBox::indicator:disabled{
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: #101828;</string>
+    <string notr="true">QMenuBar{
+	background-color: #101828;
+}
+
+QMenuBar::item:selected{
+	color: #4198EF;
+}</string>
    </property>
    <widget class="QMenu" name="menuSettings">
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
     <property name="cursor">
      <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
     </property>
     <property name="title">
      <string>Edit</string>
     </property>
     <addaction name="actionUnreal_Engine"/>
     <addaction name="actionSettings"/>
-    <addaction name="actionAbout_us"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout_Us">
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="cursor">
+     <cursorShape>PointingHandCursor</cursorShape>
+    </property>
+    <property name="title">
+     <string>About Us</string>
+    </property>
+    <addaction name="actionDiscord"/>
    </widget>
    <addaction name="menuSettings"/>
+   <addaction name="menuAbout_Us"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="cursor">
@@ -1021,6 +1184,9 @@ QCheckBox::indicator:disabled{
    </property>
   </widget>
   <action name="actionUnreal_Engine">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="QIcon::ThemeIcon::InsertLink"/>
    </property>
@@ -1029,6 +1195,12 @@ QCheckBox::indicator:disabled{
    </property>
   </action>
   <action name="actionSettings">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
    <property name="icon">
     <iconset theme="QIcon::ThemeIcon::DocumentProperties"/>
    </property>
@@ -1042,6 +1214,14 @@ QCheckBox::indicator:disabled{
    </property>
    <property name="text">
     <string>About us</string>
+   </property>
+  </action>
+  <action name="actionDiscord">
+   <property name="icon">
+    <iconset theme="QIcon::ThemeIcon::InsertLink"/>
+   </property>
+   <property name="text">
+    <string>Discord</string>
    </property>
   </action>
  </widget>
