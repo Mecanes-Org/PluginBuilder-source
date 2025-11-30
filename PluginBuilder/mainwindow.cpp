@@ -5,11 +5,13 @@
 #include <QMessageBox>
 #include <QCursor>
 #include <QCheckBox>
-#include <QPushButton>
+#include <QFrame>
 #include <QDir>
 #include <QFile>
+#include <QProcess>
 
 #include "unrealversions.h"
+#include "settings.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,8 +21,11 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // INIT VARIABLES
-    if( getValidFileExist( getUnrealVersionsFilePath() ) ){
-        unrealVersions = loadUnrealVersions( getUnrealVersionsFilePath() );
+
+    runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
+
+    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
+        unrealVersions = data.loadUnrealVersions( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) );
 
         for (const S_UnrealVersion &val : std::as_const( unrealVersions ) ) {
             QCheckBox *check = new QCheckBox(val.name, this);
@@ -52,8 +57,11 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
-
     ui->pushButton_build->setDisabled(true);
+
+
+    // SIGNAL
+    connect(this, &MainWindow::buildFinished, this, &MainWindow::onBuildFinished);
 }
 
 MainWindow::~MainWindow()
@@ -90,6 +98,162 @@ bool MainWindow::canBuild()
     return true;
 }
 
+void MainWindow::prepareToBuild()
+{
+    QString label_pluginPath = ui->label_pluginPath->text();
+
+    QList<QString> settingsList = data.loadSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
+
+    // QString dirOutput = R"(C:/Users/MEC/Project/Programmation/)";
+
+    QString dirOutput = "";
+
+    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
+        dirOutput = settingsList.at(0);
+
+        dirOutput.replace('\\', '/');
+
+        if (!dirOutput.endsWith('/'))
+            dirOutput += '/';
+    }
+
+    if( dirOutput.isEmpty() ){
+        QMessageBox::warning(this, "Plugin - Dist", tr("The location where the compiled plugins are stored is invalid."
+                                                       "\n"
+                                                       " Go to Edit > Settings > General."));
+        return;
+    }
+
+
+    if( canBuild() ) {
+        bool disabled = true;
+
+        if( ui->pushButton_build->isEnabled() ){
+
+            // DISABLED UI
+            ui->frame_unrealVersionsList->setDisabled(true);
+            ui->frame_pluginConfig->setDisabled(true);
+            this->menuBar()->setDisabled(true) ;
+
+            this->setCursor(Qt::WaitCursor);
+
+            startBuild(
+                unrealVersions.at( lastPluginBuildIndex ).path,
+                label_pluginPath,
+                dirOutput,
+                unrealVersions.at( lastPluginBuildIndex ).name,
+                "MyPlugins",
+                "v0.4");
+
+            // ... ton traitement
+            // Quand c'est fini :
+            // this->unsetCursor();
+            // ui->pushButton_build->setEnabled(true);
+        }
+    }
+}
+
+void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion)
+{
+
+    ui->label_log->setText( tr("Build ... \n"));
+
+    QString runUatPathComplete = engineDir + runUatFilePath;
+    QFileInfo runUatFolderPath(runUatPathComplete);
+
+    outputDir = outputDir + pluginName + "_" + unrealVersion + "_" + pluginVersion;
+
+    // qDebug() << QDir::toNativeSeparators(runUatPathComplete);
+    // qDebug() << "-Plugin=" + QDir::toNativeSeparators( pluginPath );
+    // qDebug() <<  "-Package=" + QDir::toNativeSeparators( outputDir );
+    // qDebug() << "-TargetPlatforms=Win64";
+
+
+    QStringList args;
+    args << "BuildPlugin"
+         << "-Plugin=" + pluginPath
+         << "-Package=" + outputDir
+         << "-Rocket"
+         << "-VS2022"
+         << "-Progress";
+        // << "-TargetPlatforms=Win64"
+
+
+
+
+    QProcess *proc = new QProcess;
+
+    // voir les logs en temps réel dans la console Qt
+    // STDOUT
+    QObject::connect(proc, &QProcess::readyReadStandardOutput, [this, proc]() {
+
+        // Lire une seule fois le buffer
+        QByteArray data = proc->readAllStandardOutput();
+
+        // Affiche en debug
+        qDebug().noquote() << data;
+
+        // Convertir en QString
+        QString text = QString::fromLocal8Bit(data);
+
+        // Ajoute a chaque fois
+        ui->label_log->setText( ui->label_log->text() + text );
+
+    });
+
+    // STDERR
+    QObject::connect(proc, &QProcess::readyReadStandardError, [this, proc]() {
+        qDebug().noquote() << proc->readAllStandardError();
+
+        QString text = QString::fromLocal8Bit(proc->readAllStandardError());
+
+        // Ajouter les erreurs à la suite
+        ui->label_log->setText( ui->label_log->text() + "\n[ERR] " + text );
+
+    });
+
+    QObject::connect(proc,
+                     QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
+                     [this, proc](int exitCode, QProcess::ExitStatus status) {
+
+                         bool ok = (status == QProcess::NormalExit && exitCode == 0);
+
+                         qDebug() << "Build finished, exitCode =" << exitCode << ", status =" << status;
+
+                         ui->label_log->setText(
+                             ui->label_log->text()
+                             + QString("\nBuild finished (exitCode=%1)").arg(exitCode)
+                             );
+
+
+                         // DISABLED UI
+                         ui->frame_unrealVersionsList->setDisabled(false);
+                         ui->frame_pluginConfig->setDisabled(false);
+                         this->menuBar()->setDisabled(false) ;
+                         this->setCursor(QCursor(Qt::ArrowCursor));
+
+                         proc->deleteLater();
+
+                         emit buildFinished(ok, exitCode, QString("\nBuild finished (exitCode=%1)").arg(exitCode));
+                     });
+
+    proc->setProgram( runUatPathComplete );
+    proc->setArguments(args);
+    proc->setWorkingDirectory( runUatFolderPath.absolutePath() );
+    proc->start();
+
+    if (!proc->waitForStarted(3000)) {
+        qDebug() << "QProcess failed to start:" << proc->errorString();
+        return;
+    }
+
+
+
+}
+
+
+
+
 void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
 {
     unrealVersions = newUnrealVersions;
@@ -124,94 +288,15 @@ void MainWindow::clearLayout(QLayout *layout)
     }
 }
 
-QString MainWindow::getUnrealVersionsFilePath()
+QList<S_UnrealVersion> MainWindow::getUnrealVersions()
 {
-    QString dir = QCoreApplication::applicationDirPath();
-    QDir d(dir);
-
-    // sous-dossier "data"
-    d.mkpath("data");
-
-
-    return d.filePath("data/unreal_versions.json");
-}
-
-bool MainWindow::getValidFileExist(const QString &filePath)
-{
-    if (QFile::exists(filePath)) {
-        return true;
-    }
-
-    return false;
-}
-
-void MainWindow::saveUnrealVersions()
-{
-
-    QString dir = QCoreApplication::applicationDirPath();
-    QDir d(dir);
-    // Optionnel: sous-dossier "data"
-    d.mkpath("data");
-
-    const QString filePath = getUnrealVersionsFilePath();
-
-    QJsonArray arr;
-
-    for (const S_UnrealVersion &v : std::as_const( unrealVersions )) {
-        QJsonObject obj;
-
-        obj["path"] = v.path;
-        obj["name"] = v.name;
-        arr.append(obj);
-    }
-
-    QJsonDocument doc(arr);
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-        return; // gérer l’erreur comme tu veux
-
-    file.write(doc.toJson(QJsonDocument::Indented));
-    file.close();
-}
-
-QList<S_UnrealVersion> MainWindow::loadUnrealVersions( const QString &filePath)
-{
-
-    QList<S_UnrealVersion> result;
-    QFile file( ( filePath.isEmpty() ) ? getUnrealVersionsFilePath() : filePath );
-
-
-    if (!file.open(QIODevice::ReadOnly))
-        return result; // GERER LES ERREUR ...
-
-    const QByteArray data = file.readAll();
-    file.close();
-
-    QJsonParseError err;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    if (err.error != QJsonParseError::NoError || !doc.isArray())
-        return result;
-
-    QJsonArray arr = doc.array();
-    for (const QJsonValue &val : std::as_const(arr) ) {
-        if (!val.isObject())
-            continue;
-        QJsonObject obj = val.toObject();
-
-        S_UnrealVersion v;
-        v.path = obj.value("path").toString();
-        v.name = obj.value("name").toString();
-        result.append(v);
-    }
-
-    return result;
+    return unrealVersions;
 }
 
 
 void MainWindow::on_pushButton_findPlugin_clicked()
 {
-    QString file_name = QFileDialog::getOpenFileName(this, tr("Search your plugin"), "");
+    QString file_name = QFileDialog::getOpenFileName(this, tr("Search your plugin"), "", "file (*.uplugin)");
     QFile file(file_name);
 
     if(file_name.isEmpty()){
@@ -224,47 +309,23 @@ void MainWindow::on_pushButton_findPlugin_clicked()
 }
 
 
-
-
 void MainWindow::on_pushButton_build_clicked()
 {
+    QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
 
-    QString label_pluginPath = ui->label_pluginPath->text();
-
-    if( canBuild() ) {
-        bool disabled = true;
-
-        if( ui->pushButton_build->isEnabled() ){
-            // Curseur attente sur toute la fenêtre
-            this->setCursor(Qt::WaitCursor);
-
-            QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
-            foreach (QCheckBox *cb, checkboxes) {
-                cb->setDisabled( disabled );
-            }
-
-            QList<QPushButton*> pushButtons = this->findChildren<QPushButton*>();
-            foreach (QPushButton *pushButton, pushButtons) {
-                pushButton->setDisabled( disabled );
-            }
-
-
-            // ... ton traitement
-            // Quand c'est fini :
-            // this->unsetCursor();
-            // ui->pushButton_build->setEnabled(true);
+    foreach (QCheckBox *cb, checkboxes) {
+        if (cb->isChecked()) {
+            unrealVersionsChecked.append(cb);
         }
     }
 
-
+    prepareToBuild();
 
 }
 
 void MainWindow::on_actionUnreal_Engine_triggered()
 {
     // AFFICHE UI SUR LES VERSION D UNREAL
-
-
     UnrealVersions unrealVersions(this);
     unrealVersions.exec();
 
@@ -275,11 +336,27 @@ void MainWindow::on_actionUnreal_Engine_triggered()
 void MainWindow::on_actionSettings_triggered()
 {
     // AFFICHE UI SUR LES SETTINGS DU LOGICIEL
+    Settings settingsUI(this);
+    settingsUI.exec();
 }
 
-
-void MainWindow::on_actionUnreal_Engine_changed()
+// APRES LA FIN DU BUILD
+void MainWindow::onBuildFinished(bool success, int exitCode,const QString &logMessage)
 {
+    // QString title = success ? "Build succeeded" : "Build failed";
+    // QString text  = success
+    //                    ? QString("Plugin build succeeded.\nExit code: %1").arg(exitCode)
+    //                    : QString("Plugin build failed.\nExit code: %1\n\nLog:\n%2")
+    //                          .arg(exitCode)
+    //                          .arg(logMessage);
+
+    // QMessageBox::information(this, title, text);
+    // // ou un QDialog personnalisé si tu préfères
+
+    if( lastPluginBuildIndex < ( unrealVersionsChecked.length() -1 )  ){
+        ++lastPluginBuildIndex;
+
+        prepareToBuild();
+    }
 
 }
-

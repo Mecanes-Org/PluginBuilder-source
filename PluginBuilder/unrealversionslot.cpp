@@ -9,6 +9,9 @@ UnrealVersionSlot::UnrealVersionSlot(QWidget *parent)
     , ui(new Ui::UnrealVersionSlot)
 {
     ui->setupUi(this);
+
+    // EXEMPLE :  "C:\Program Files\Epic Games\UE_5.4\Engine\Build\BatchFiles"
+    defaultDir = "C:\\Program Files\\Epic Games";
 }
 
 UnrealVersionSlot::~UnrealVersionSlot()
@@ -36,15 +39,14 @@ void UnrealVersionSlot::setUnrealVersion(S_UnrealVersion unrealV)
 
 void UnrealVersionSlot::on_pushButton_find_clicked()
 {
-    QString file_name = QFileDialog::getOpenFileName(this, tr("Search your plugin"), "");
-    QFile file(file_name);
+    QString dir = QFileDialog::getExistingDirectory(this, tr("Unreal ( Ex : UE_5.7)"), defaultDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
-    if(file_name.isEmpty()){
+    if( !dir.isEmpty() ){
+        ui->label_pluginPath->setText(dir);
+    }else{
         QMessageBox::warning(this, tr("Error"), tr("Incorrect file"));
-        return;
     }
 
-    ui->label_pluginPath->setText(file_name);
 }
 
 

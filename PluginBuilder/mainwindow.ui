@@ -498,7 +498,25 @@
    <iconset theme="QIcon::ThemeIcon::WeatherClear"/>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #030712;</string>
+   <string notr="true">QWidget{
+	background-color: #030712;
+}
+
+QMenuBar,  QStatusBar{
+	background-color: #0F172B;
+}
+
+QMenuBar::item:selected{
+	color: #4198EF;
+}
+
+QScrollArea{
+	border: none;
+}
+
+QLabel#label_log{
+	color:  rgba(255, 255, 255, .75);
+}</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -622,7 +640,7 @@ QCheckBox::indicator:disabled{
               <item>
                <widget class="QScrollArea" name="scrollArea">
                 <property name="styleSheet">
-                 <string notr="true">border: none;</string>
+                 <string notr="true"/>
                 </property>
                 <property name="widgetResizable">
                  <bool>true</bool>
@@ -703,7 +721,7 @@ QCheckBox::indicator:disabled{
             </widget>
            </item>
            <item>
-            <widget class="QGroupBox" name="groupBox_UE4">
+            <widget class="QGroupBox" name="groupBox_notif">
              <property name="minimumSize">
               <size>
                <width>170</width>
@@ -717,7 +735,7 @@ QCheckBox::indicator:disabled{
               </size>
              </property>
              <property name="title">
-              <string>UE4</string>
+              <string>Notifications</string>
              </property>
             </widget>
            </item>
@@ -949,19 +967,71 @@ background-color: #1D293D;</string>
                <number>5</number>
               </property>
               <item>
-               <widget class="QLabel" name="label_log">
-                <property name="styleSheet">
-                 <string notr="true"/>
+               <widget class="QScrollArea" name="scrollArea_log">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
                 </property>
-                <property name="text">
-                 <string>Log</string>
+                <property name="widgetResizable">
+                 <bool>true</bool>
                 </property>
                 <property name="alignment">
                  <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
                 </property>
-                <property name="wordWrap">
-                 <bool>true</bool>
-                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>740</width>
+                   <height>443</height>
+                  </rect>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_9">
+                  <property name="topMargin">
+                   <number>10</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>10</number>
+                  </property>
+                  <item alignment="Qt::AlignmentFlag::AlignTop">
+                   <widget class="QLabel" name="label_log">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Ignored" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="frameShadow">
+                     <enum>QFrame::Shadow::Plain</enum>
+                    </property>
+                    <property name="text">
+                     <string/>
+                    </property>
+                    <property name="textFormat">
+                     <enum>Qt::TextFormat::AutoText</enum>
+                    </property>
+                    <property name="scaledContents">
+                     <bool>true</bool>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                    <property name="indent">
+                     <number>-1</number>
+                    </property>
+                    <property name="openExternalLinks">
+                     <bool>false</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
                </widget>
               </item>
              </layout>
@@ -986,13 +1056,7 @@ background-color: #1D293D;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">QMenuBar{
-	background-color: #101828;
-}
-
-QMenuBar::item:selected{
-	color: #4198EF;
-}</string>
+    <string notr="true"/>
    </property>
    <widget class="QMenu" name="menuSettings">
     <property name="font">
@@ -1024,7 +1088,6 @@ QMenuBar::item:selected{
     <property name="title">
      <string>About Us</string>
     </property>
-    <addaction name="actionDiscord"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuAbout_Us"/>

@@ -25,12 +25,12 @@ public:
 
 private slots:
     void on_pushButton_find_clicked();
-
     void on_pushButton_delete_clicked();
 
 private:
     Ui::UnrealVersionSlot *ui;
     S_UnrealVersion unrealVersion;
+    QString defaultDir;
 };
 
 #endif // UNREALVERSIONSLOT_H

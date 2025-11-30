@@ -21,23 +21,16 @@ public:
     ~MainWindow();
 
     bool canBuild();
+    void prepareToBuild();
+    void startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion);
+
 
     void setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions);
 
     // CLEAR LAYOUT
     void clearLayout(QLayout *layout);
 
-public:
-    // GETTER & SETTER
-    QList<S_UnrealVersion> getUnrealVersions() const {return unrealVersions;};
-
-    // CHOISI UNE ROOT POUR LA SAVE DE UNREAL VERSION
-    QString getUnrealVersionsFilePath();
-    bool getValidFileExist(const QString &filePath);
-
-    // SAVE TO UNREAL VERSIONS
-    void saveUnrealVersions();
-    QList<S_UnrealVersion> loadUnrealVersions( const QString &filePath );
+    QList<S_UnrealVersion> getUnrealVersions();
 
 private slots:
     void on_pushButton_findPlugin_clicked();
@@ -48,11 +41,21 @@ private slots:
 
     void on_actionSettings_triggered();
 
-    void on_actionUnreal_Engine_changed();
+    void onBuildFinished(bool success, int exitCode,const QString &logMessage);
+
+signals:
+    void buildFinished(bool success, int exitCode, const QString &logMessage);
 
 private:
     Ui::MainWindow *ui;
 
     QList<S_UnrealVersion> unrealVersions;
+    QList<QCheckBox*> unrealVersionsChecked;
+    QString runUatFilePath;
+
+    // l index du dernier plugin qui a été build
+    int lastPluginBuildIndex;
+    Data data;
+
 };
 #endif // MAINWINDOW_H

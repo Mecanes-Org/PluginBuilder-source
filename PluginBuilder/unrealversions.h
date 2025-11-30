@@ -8,6 +8,7 @@
 #include <QFile>
 
 #include "mainwindow.h"
+#include "data.h"
 
 namespace Ui {
 class UnrealVersions;
@@ -26,11 +27,14 @@ private slots:
     void on_pushButton_addUE_Version_clicked();
 
     void on_buttonBox_accepted();
+
     void on_buttonBox_rejected();
 
 private:
     Ui::UnrealVersions *ui;
     MainWindow *mainWin;
+
+    Data data;
 };
 
 #endif // UNREALVERSIONS_H

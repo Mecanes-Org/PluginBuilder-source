@@ -4,7 +4,6 @@
 #include <QDebug>
 
 #include "unrealversionslot.h"
-#include "data.h"
 
 
 
@@ -55,9 +54,6 @@ void UnrealVersions::on_pushButton_addUE_Version_clicked()
 
 void UnrealVersions::on_buttonBox_accepted()
 {
-    qDebug() << "Save All";
-
-
 
     QList<S_UnrealVersion> unrealVersions;
 
@@ -66,8 +62,6 @@ void UnrealVersions::on_buttonBox_accepted()
     // qDebug() << unrealVSlot;
 
     if (!unrealVSlot.isEmpty()) {
-
-        qDebug() << "Unreal : " << unrealVSlot.length();
 
         for (UnrealVersionSlot* slot : std::as_const(unrealVSlot)) {
             if (!slot)
@@ -87,13 +81,13 @@ void UnrealVersions::on_buttonBox_accepted()
         if (mainWin) {
             // Tu peux maintenant appeler des méthodes / accéder à des membres publics
             mainWin->setUnrealVersions(unrealVersions);
-            mainWin->saveUnrealVersions();
+            data.saveUnrealVersions(unrealVersions);
         }
     }else{
         if (mainWin) {
             // Tu peux maintenant appeler des méthodes / accéder à des membres publics
             mainWin->setUnrealVersions(unrealVersions);
-            mainWin->saveUnrealVersions();
+            data.saveUnrealVersions(unrealVersions);
         }
     }
 
@@ -101,9 +95,8 @@ void UnrealVersions::on_buttonBox_accepted()
 
 }
 
-
 void UnrealVersions::on_buttonBox_rejected()
 {
-    qDebug() << "Cancel";
+    this->close();
 }
 
