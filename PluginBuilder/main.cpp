@@ -26,19 +26,19 @@ int main(int argc, char *argv[])
 
 
     // 3) Fenêtre principale
-    MainWindow w;/*
+    MainWindow w;
 
     // &loading, &w; { ... }
     // - C’est une lambda (fonction anonyme C++).
     // Le bloc { loading.close(); w.show(); } est ce qui sera exécuté quand loadingFinished est émis.
 
-    QObject::connect(&loading, &LoadingWindow::loadingFinished,
-                     [&loading, &w]() {
-                         loading.close();
-                         w.show();
-                     });
+    // QObject::connect(&loading, &LoadingWindow::loadingFinished,
+    //                  [&loading, &w]() {
+    //                      loading.close();
+    //                      w.show();
+    //                  });
 
-    loading.show();*/
+    // loading.show();
 
 
     w.show();

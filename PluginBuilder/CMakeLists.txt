@@ -28,6 +28,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         resources.qrc
         loadingwindow.h loadingwindow.cpp loadingwindow.ui
+        unrealversions.h unrealversions.cpp unrealversions.ui
+        unrealversionslot.h unrealversionslot.cpp unrealversionslot.ui
+        data.h
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET PluginBuilder APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
