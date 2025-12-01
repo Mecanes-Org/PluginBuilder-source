@@ -501,10 +501,10 @@
    <string notr="true">QWidget{
 	background-color: #030712;
 }
-
 QMenuBar,  QStatusBar{
-	background-color: #0F172B;
+	background-color: #101828;
 }
+
 
 QMenuBar::item:selected{
 	color: #4198EF;
@@ -516,12 +516,44 @@ QScrollArea{
 
 QLabel#label_log{
 	color:  rgba(255, 255, 255, .75);
-}</string>
+}
+
+QLabel{
+	background-color:  none;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px; 
+    border: 1px solid #4198EF;
+}
+
+QCheckBox::indicator:checked{
+	image: url(:/resources/images/check-icon.png);
+}
+
+QCheckBox::indicator:disabled{
+	border: 1px solid rgb(58, 58, 58);
+}
+
+QLineEdit{
+	background-color:  rgba(255, 255, 255, .1 );
+	color: rgba(255, 255, 255, .8 );
+}
+
+QLabel#label_pluginPath{
+	border: 1px solid #E7E5E4 ;
+	border-radius: 2px;
+}
+</string>
   </property>
   <property name="documentMode">
    <bool>false</bool>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
@@ -540,20 +572,7 @@ QLabel#label_log{
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">QCheckBox::indicator {
-    width: 16px;         /* largeur voulue */
-    height: 16px;        /* hauteur voulue */
-    border: 1px solid #4198EF;
-}
-
-QCheckBox::indicator:checked{
-	image: url(:/resources/images/check-icon.png);
-}
-
-QCheckBox::indicator:disabled{
-	
-	border: 1px solid rgb(58, 58, 58);
-}</string>
+         <string notr="true">background-color: #020618;</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::Shape::StyledPanel</enum>
@@ -639,6 +658,12 @@ QCheckBox::indicator:disabled{
               </property>
               <item>
                <widget class="QScrollArea" name="scrollArea">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="styleSheet">
                  <string notr="true"/>
                 </property>
@@ -758,7 +783,7 @@ QCheckBox::indicator:disabled{
            <property name="spacing">
             <number>20</number>
            </property>
-           <item>
+           <item alignment="Qt::AlignmentFlag::AlignHCenter">
             <widget class="QFrame" name="frame_pluginConfig">
              <property name="minimumSize">
               <size>
@@ -769,26 +794,14 @@ QCheckBox::indicator:disabled{
              <property name="maximumSize">
               <size>
                <width>760</width>
-               <height>140</height>
+               <height>200</height>
               </size>
              </property>
+             <property name="autoFillBackground">
+              <bool>false</bool>
+             </property>
              <property name="styleSheet">
-              <string notr="true">QFrame{
-	background-color: #0F172B;
-}
-
-QLabel#label_pluginPath{
-	border: 1px solid #E7E5E4 ;
-	border-radius: 2px;
-}
-
-QPushButton{ 
-	background-color: #1D293D;
-}
-
-QPushButton:disabled{ 
-	background-color: #0F172B; 
-}</string>
+              <string notr="true">background-color: #101828;</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -815,22 +828,34 @@ QPushButton:disabled{
               </item>
               <item>
                <layout class="QHBoxLayout" name="horizontalLayout">
-                <property name="spacing">
-                 <number>6</number>
-                </property>
-                <property name="leftMargin">
-                 <number>0</number>
-                </property>
-                <property name="rightMargin">
-                 <number>0</number>
-                </property>
                 <item>
                  <widget class="QLabel" name="label_pluginPath">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>30</height>
+                   </size>
+                  </property>
+                  <property name="maximumSize">
+                   <size>
+                    <width>16777215</width>
+                    <height>30</height>
+                   </size>
+                  </property>
                   <property name="font">
                    <font>
                     <pointsize>12</pointsize>
                     <bold>false</bold>
                    </font>
+                  </property>
+                  <property name="toolTip">
+                   <string>Plugin link</string>
                   </property>
                   <property name="styleSheet">
                    <string notr="true">border-color: rgb(115, 115, 115);
@@ -852,6 +877,12 @@ background-color: #1D293D;</string>
                 </item>
                 <item>
                  <widget class="QPushButton" name="pushButton_findPlugin">
+                  <property name="sizePolicy">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
+                    <horstretch>0</horstretch>
+                    <verstretch>0</verstretch>
+                   </sizepolicy>
+                  </property>
                   <property name="minimumSize">
                    <size>
                     <width>80</width>
@@ -861,7 +892,7 @@ background-color: #1D293D;</string>
                   <property name="maximumSize">
                    <size>
                     <width>80</width>
-                    <height>50</height>
+                    <height>30</height>
                    </size>
                   </property>
                   <property name="font">
@@ -873,6 +904,15 @@ background-color: #1D293D;</string>
                   </property>
                   <property name="cursor">
                    <cursorShape>PointingHandCursor</cursorShape>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">QPushButton{ 
+	background-color:  #1D293D;
+}
+
+QPushButton:disabled{ 
+	background-color: #0F172B; 
+}</string>
                   </property>
                   <property name="text">
                    <string/>
@@ -894,21 +934,78 @@ background-color: #1D293D;</string>
                </layout>
               </item>
               <item>
-               <widget class="QPushButton" name="pushButton_build">
+               <widget class="QLineEdit" name="lineEdit_pluginName">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
                 <property name="minimumSize">
                  <size>
-                  <width>80</width>
+                  <width>300</width>
                   <height>40</height>
                  </size>
                 </property>
                 <property name="maximumSize">
                  <size>
-                  <width>80</width>
+                  <width>300</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="font">
+                 <font>
+                  <pointsize>14</pointsize>
+                 </font>
+                </property>
+                <property name="toolTip">
+                 <string/>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">margin-top: 5px;</string>
+                </property>
+                <property name="text">
+                 <string/>
+                </property>
+                <property name="maxLength">
+                 <number>50</number>
+                </property>
+                <property name="placeholderText">
+                 <string>Plugin Name</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignmentFlag::AlignRight">
+               <widget class="QPushButton" name="pushButton_build">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>150</width>
+                  <height>40</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>100</width>
                   <height>50</height>
                  </size>
                 </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">QPushButton{ 
+	background-color:  #1D293D;
+}
+
+QPushButton:disabled{ 
+	background-color: #0F172B; 
+}</string>
                 </property>
                 <property name="text">
                  <string>Build</string>
@@ -942,7 +1039,7 @@ background-color: #1D293D;</string>
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: #0F172B;</string>
+              <string notr="true">background-color: #101828;</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -974,6 +1071,9 @@ background-color: #1D293D;</string>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
                 <property name="widgetResizable">
                  <bool>true</bool>
                 </property>
@@ -986,7 +1086,7 @@ background-color: #1D293D;</string>
                    <x>0</x>
                    <y>0</y>
                    <width>740</width>
-                   <height>443</height>
+                   <height>401</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_9">

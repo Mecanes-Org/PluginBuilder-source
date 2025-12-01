@@ -3,6 +3,7 @@
 
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QCheckBox>
 #include <QDir>
 
 
@@ -16,10 +17,14 @@ Settings::Settings(QWidget *parent)
 {
     ui->setupUi(this);
 
-    settingsList = data.loadSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
+    GeneralSettings = data.loadGeneralSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
+
+    // qDebug() << "Load A = " << data.getJsonFile_SettingsName() ;
+    // qDebug() << "Load B = " << data.getJasonFilePath( data.getJsonFile_SettingsName() ) ;
+    // qDebug() << "Load C = " << GeneralSettings.pluginDistPath ;
 
     if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
-        ui->lineEdit_plugin_dist_path->setText( settingsList.at(0) );
+        ui->lineEdit_plugin_dist_path->setText( GeneralSettings.pluginDistPath );
     }
 
 }
@@ -29,34 +34,7 @@ Settings::~Settings()
     delete ui;
 }
 
-
-void Settings::saveSettings()
-{
-    const QString folderPath = data.getJasonFilePath( data.getJsonFile_SettingsName() );
-
-    QJsonArray arr;
-
-    QJsonObject obj;
-
-    obj["plugin_dist_path"] = ui->lineEdit_plugin_dist_path->text();
-    arr.append(obj);
-
-
-    QJsonDocument doc(arr);
-
-    QFile file(folderPath);
-
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-        // gérer l'erreur (message, qWarning, etc.)
-        QMessageBox::warning(this,tr("ERROR"), tr("Incorrect file."));
-        return;
-    }
-
-    file.write(doc.toJson(QJsonDocument::Indented));
-    file.close();
-}
-
-void Settings::on_pushButton_clicked()
+void Settings::on_pushButton_find_plugin_dist_clicked()
 {
     QString dir = QFileDialog::getExistingDirectory(this, tr("Unreal ( Ex : UE_5.7)"), defaultDir, QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 
@@ -65,11 +43,40 @@ void Settings::on_pushButton_clicked()
     }else{
         QMessageBox::warning(this, tr("Error"), tr("Incorrect file"));
     }
+
+
 }
 
 
 void Settings::on_buttonBox_accepted()
 {
-    saveSettings();
+    S_GeneralSettings generalSettings ;
+
+    QList<QString> platformList;
+
+    QList<QCheckBox*> checkBoxes = this->findChildren<QCheckBox*>();
+
+
+    // qDebug() << "Taille : " << checkBoxes.length() ;
+
+
+    foreach (QCheckBox *val, checkBoxes) {
+
+        if( val->isChecked() ){
+            // qDebug() << "Name : " << val->text() << " \n" ;
+            platformList.append( val->text() );
+        }
+    }
+
+    generalSettings.platformList = platformList;
+    generalSettings.pluginDistPath = ui->lineEdit_plugin_dist_path->text();
+
+
+    if( !data.saveGeneralSettings( generalSettings ) ){
+        QMessageBox::warning(this,tr("ERROR"), tr("Incorrect file."));
+        return;
+    }
+
+
 }
 

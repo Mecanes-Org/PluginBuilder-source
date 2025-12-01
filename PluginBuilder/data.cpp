@@ -4,7 +4,9 @@
 #include <QDebug>
 #include <QDir>
 #include <QCoreApplication>
+#include <QMessageBox>
 
+// JSON FILE
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
@@ -31,6 +33,54 @@ QString Data::getJasonFilePath(const QString &filename)
     }
 
     return d.filePath( "data/" + filename);
+}
+
+S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
+{
+    S_GeneralSettings result;
+
+
+    QFile file( ( filePath.isEmpty() ) ? getJasonFilePath( getJsonFile_SettingsName() ) : filePath );
+
+
+    if (!file.open(QIODevice::ReadOnly)){
+        return result; // GERER LES ERREUR ...
+    }
+
+    const QByteArray data = file.readAll();
+    file.close();
+
+
+    QJsonParseError err;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+    if (err.error != QJsonParseError::NoError || !doc.isObject()){
+        return result;
+    }
+
+    QJsonObject root = doc.object();
+
+    QJsonArray generalArray = root.value("settings_general").toArray();
+
+    if (!generalArray.isEmpty() && generalArray.first().isObject()) {
+
+        QJsonObject generalObj = generalArray.first().toObject();
+
+        QString pluginDistPath = generalObj.value("plugin_dist_path").toString();
+
+        QList<QString> platformListGeneral;
+        QJsonArray platformArray = generalObj.value("platform_list").toArray();
+
+        for (const QJsonValue &v : std::as_const(platformArray) ){
+            if (v.isString()){
+                platformListGeneral.append(v.toString());
+            }
+        }
+
+        result.pluginDistPath = pluginDistPath;
+        result.platformList = platformListGeneral;
+    }
+
+    return result;
 }
 
 QList<QString> Data::loadSettings(const QString &filePath)
@@ -95,6 +145,77 @@ QList<S_UnrealVersion> Data::loadUnrealVersions(const QString &filePath)
     }
 
     return result;
+}
+
+bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
+{
+    const QString folderPath = getJasonFilePath( getJsonFile_SettingsName() );
+
+    QJsonArray platformArray, generalSettingsArray;
+    QJsonObject root, generalObj;
+
+    for (const QString &p : generalSettingsIn.platformList) {
+        platformArray.append(p);
+    }
+
+    generalObj["platform_list"] = platformArray;
+    generalObj["plugin_dist_path"] = generalSettingsIn.pluginDistPath ;
+
+    generalSettingsArray.append(generalObj);
+
+    root["settings_general"] = generalSettingsArray;
+
+
+    QJsonDocument doc(root);
+
+    QFile file(folderPath);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        // gérer l'erreur (message, qWarning, etc.)
+
+        return false;
+    }
+
+    file.write(doc.toJson(QJsonDocument::Indented));
+    file.close();
+
+    return true;
+}
+
+bool Data::saveSettings( const QString &plugin_dist_path)
+{
+    const QString folderPath = getJasonFilePath( getJsonFile_SettingsName() );
+
+    QJsonArray settings;
+
+    QJsonArray settings_General;
+
+    QJsonObject objectSettings, objectGeneral;
+
+
+    objectGeneral["plugin_dist_path"] = plugin_dist_path ;
+
+
+    settings_General.append( objectGeneral );
+    objectSettings["settings_general"] = settings_General ;
+
+    settings.append(objectSettings);
+
+
+    QJsonDocument doc(settings);
+
+    QFile file(folderPath);
+
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
+        // gérer l'erreur (message, qWarning, etc.)
+
+        return false;
+    }
+
+    file.write(doc.toJson(QJsonDocument::Indented));
+    file.close();
+
+    return true;
 }
 
 void Data::saveUnrealVersions(QList<S_UnrealVersion> unrealVersions)

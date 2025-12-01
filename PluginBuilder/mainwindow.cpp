@@ -70,6 +70,11 @@ MainWindow::~MainWindow()
 
 }
 
+S_GeneralSettings MainWindow::getGeneralSettings()
+{
+    return data.loadGeneralSettings();
+}
+
 bool MainWindow::canBuild()
 {
     QString label_pluginPath = ui->label_pluginPath->text();
@@ -101,15 +106,28 @@ bool MainWindow::canBuild()
 void MainWindow::prepareToBuild()
 {
     QString label_pluginPath = ui->label_pluginPath->text();
+    QString pluginName = ui->lineEdit_pluginName->text();
 
-    QList<QString> settingsList = data.loadSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
+    if( pluginName.isEmpty() ){
+        QMessageBox::warning(this, tr("Plugin Name"), tr("Plugin Name is ivalid") );
+        return;
+    }
+
+    if( data.loadGeneralSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ).pluginDistPath.isEmpty() ){
+        QMessageBox::warning(this, tr("Plugin-dist"), tr("The Plugin-dist folder could not be found."
+                                                         "\n"
+                                                         "Go to Edit > Settings > General.") );
+        return;
+    }
+
+    S_GeneralSettings general_settings = getGeneralSettings();
 
     // QString dirOutput = R"(C:/Users/MEC/Project/Programmation/)";
 
     QString dirOutput = "";
 
     if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
-        dirOutput = settingsList.at(0);
+        dirOutput = general_settings.pluginDistPath;
 
         dirOutput.replace('\\', '/');
 
@@ -120,7 +138,7 @@ void MainWindow::prepareToBuild()
     if( dirOutput.isEmpty() ){
         QMessageBox::warning(this, "Plugin - Dist", tr("The location where the compiled plugins are stored is invalid."
                                                        "\n"
-                                                       " Go to Edit > Settings > General."));
+                                                       "Go to Edit > Settings > General."));
         return;
     }
 
@@ -142,7 +160,7 @@ void MainWindow::prepareToBuild()
                 label_pluginPath,
                 dirOutput,
                 unrealVersions.at( lastPluginBuildIndex ).name,
-                "MyPlugins",
+                pluginName,
                 "v0.4");
 
             // ... ton traitement
@@ -155,6 +173,8 @@ void MainWindow::prepareToBuild()
 
 void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion)
 {
+    S_GeneralSettings general_settings = getGeneralSettings();
+    QString concatPlatformeList;
 
     ui->label_log->setText( tr("Build ... \n"));
 
@@ -168,6 +188,14 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     // qDebug() <<  "-Package=" + QDir::toNativeSeparators( outputDir );
     // qDebug() << "-TargetPlatforms=Win64";
 
+    foreach (QString platform, general_settings.platformList) {
+        concatPlatformeList += ( "+" + platform );
+    }
+
+    // qDebug() << "++++++++++++++++++ \n";
+    // qDebug() << concatPlatformeList;
+    // qDebug() << "++++++++++++++++++ \n";
+
 
     QStringList args;
     args << "BuildPlugin"
@@ -175,8 +203,8 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
          << "-Package=" + outputDir
          << "-Rocket"
          << "-VS2022"
-         << "-Progress";
-        // << "-TargetPlatforms=Win64"
+         << "-Progress"
+         << "-TargetPlatforms=" + ( concatPlatformeList.isEmpty() ? "Win64" : concatPlatformeList );
 
 
 
@@ -203,7 +231,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
     // STDERR
     QObject::connect(proc, &QProcess::readyReadStandardError, [this, proc]() {
-        qDebug().noquote() << proc->readAllStandardError();
+        // qDebug().noquote() << proc->readAllStandardError();
 
         QString text = QString::fromLocal8Bit(proc->readAllStandardError());
 
@@ -243,7 +271,12 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     proc->start();
 
     if (!proc->waitForStarted(3000)) {
-        qDebug() << "QProcess failed to start:" << proc->errorString();
+        // qDebug() << "QProcess failed to start:" << proc->errorString();
+        ui->label_log->setText(
+            ui->label_log->text()
+            + QString("\nQProcess failed to start:").arg( proc->errorString() )
+            );
+
         return;
     }
 
@@ -351,12 +384,14 @@ void MainWindow::onBuildFinished(bool success, int exitCode,const QString &logMe
     //                          .arg(logMessage);
 
     // QMessageBox::information(this, title, text);
-    // // ou un QDialog personnalisé si tu préfères
+    // ou un QDialog personnalisé si tu préfères
 
     if( lastPluginBuildIndex < ( unrealVersionsChecked.length() -1 )  ){
         ++lastPluginBuildIndex;
-
         prepareToBuild();
+
+    }else{
+        unrealVersionsChecked.clear();
     }
 
 }

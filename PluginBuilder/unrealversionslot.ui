@@ -33,7 +33,7 @@
   </property>
   <property name="styleSheet">
    <string notr="true">QFrame#frame_ue{
-	background-color: #0F172B;
+	background-color: #101828;
 }
 
 QLabel#label_pluginPath{

@@ -17,14 +17,11 @@ public:
     explicit Settings(QWidget *parent = nullptr);
     ~Settings();
 
-    // SAVE
-    void saveSettings();
-
     QString getSettingsFilePath();
 
 
 private slots:
-    void on_pushButton_clicked();
+    void on_pushButton_find_plugin_dist_clicked();
 
     void on_buttonBox_accepted();
 
@@ -33,7 +30,7 @@ private:
 
     QString defaultDir;
 
-    QList<QString> settingsList;
+    S_GeneralSettings GeneralSettings;
 
     Data data;
 };

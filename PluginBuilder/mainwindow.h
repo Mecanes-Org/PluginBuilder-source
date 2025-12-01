@@ -20,6 +20,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    // SETTINGS
+    S_GeneralSettings getGeneralSettings();
+
     bool canBuild();
     void prepareToBuild();
     void startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion);
