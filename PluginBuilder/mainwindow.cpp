@@ -144,6 +144,25 @@ void MainWindow::prepareToBuild()
     }
 
 
+    // qDebug() << " 2 - " << label_pluginPath << "\n" ;
+    // qDebug() << " 3 - " << dirOutput << "\n" ;
+    // qDebug() << " 5 - " << pluginName << "\n" ;
+
+
+
+    QString unrealPath;
+
+    foreach (S_UnrealVersion val, unrealVersions) {
+        if( unrealVersionsChecked.at( lastPluginBuildIndex )->text() == val.name ){
+            unrealPath = val.path;
+            break;
+        }
+    }
+
+    // qDebug() << " 6 - " << unrealVersionsChecked.at( lastPluginBuildIndex )->text() << "\n" ;
+    // qDebug() << " Unreal path - " << unrealPath << "\n" ;
+
+
     if( canBuild() ) {
         bool disabled = true;
 
@@ -157,10 +176,10 @@ void MainWindow::prepareToBuild()
             this->setCursor(Qt::WaitCursor);
 
             startBuild(
-                unrealVersions.at( lastPluginBuildIndex ).path,
+                unrealPath,
                 label_pluginPath,
                 dirOutput,
-                unrealVersions.at( lastPluginBuildIndex ).name,
+                unrealVersionsChecked.at( lastPluginBuildIndex )->text(),
                 pluginName,
                 "v0.4");
 
@@ -192,6 +211,11 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     foreach (QString platform, general_settings.platformList) {
         concatPlatformeList += ( "+" + platform );
     }
+
+    concatPlatformeList = ( !concatPlatformeList.isEmpty() && concatPlatformeList.at(0) == '+')
+                        ? concatPlatformeList.mid(1)
+                        : concatPlatformeList;
+
 
     // qDebug() << "++++++++++++++++++ \n";
     // qDebug() << concatPlatformeList;
@@ -243,6 +267,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
     });
 
+    // STDOUT
     QObject::connect(proc,
                      QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
                      [this, unrealVersion, proc](int exitCode, QProcess::ExitStatus status) {
@@ -267,7 +292,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
                          emit buildFinished(ok, exitCode, QString("\nBuild finished (exitCode=%1)").arg(exitCode));
 
-                         showBuildNotification(false, unrealVersion);
+                         showBuildNotification(true, unrealVersion);
                      });
 
     proc->setProgram( runUatPathComplete );
@@ -366,7 +391,7 @@ void MainWindow::on_pushButton_findPlugin_clicked()
 
 void MainWindow::on_pushButton_build_clicked()
 {
-
+    unrealVersionsChecked.clear();
 
     // CLEAR LAYOUT AVANT D AJOUTER DES LOGS
     QLayout *layout = ui->scrollAreaWidgetContents_Notification->layout();

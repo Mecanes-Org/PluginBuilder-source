@@ -214,6 +214,9 @@ QLabel , QCheckBox{
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QCheckBox" name="checkBox_Win64">
+              <property name="enabled">
+               <bool>false</bool>
+              </property>
               <property name="cursor">
                <cursorShape>PointingHandCursor</cursorShape>
               </property>
