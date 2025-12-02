@@ -1,7 +1,7 @@
 <RCC>
     <qresource prefix="/resources">
-        <file>images/pluginBuilder-icon.png</file>
         <file>images/check-icon.png</file>
         <file>images/check-disabled-icon.png</file>
+        <file>images/logo/plugin-builder-bg.png</file>
     </qresource>
 </RCC>

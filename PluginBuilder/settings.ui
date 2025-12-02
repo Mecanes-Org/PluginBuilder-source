@@ -214,6 +214,9 @@ QLabel , QCheckBox{
            <layout class="QHBoxLayout" name="horizontalLayout_2">
             <item>
              <widget class="QCheckBox" name="checkBox_Win64">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Win64</string>
               </property>
@@ -224,6 +227,9 @@ QLabel , QCheckBox{
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_Mac">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Mac</string>
               </property>
@@ -231,6 +237,9 @@ QLabel , QCheckBox{
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_Linux">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Linux</string>
               </property>
@@ -238,6 +247,9 @@ QLabel , QCheckBox{
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_Android">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>Android</string>
               </property>
@@ -245,6 +257,9 @@ QLabel , QCheckBox{
             </item>
             <item>
              <widget class="QCheckBox" name="checkBox_IOS">
+              <property name="cursor">
+               <cursorShape>PointingHandCursor</cursorShape>
+              </property>
               <property name="text">
                <string>IOS</string>
               </property>

@@ -55,7 +55,7 @@ QLabel#label_pluginPath{
 QLineEdit#lineEdit_UE_versionName{
 	border: none;
 	border-bottom: 1px solid #E7E5E4 ;
-	background-color:  rgba(255, 255, 255, 10);
+	background-color:  rgba(255, 255, 255,  10);
 	border-radius: 5px;
 }
 
@@ -167,6 +167,12 @@ QPushButton:disabled{
                </property>
                <item>
                 <widget class="QLabel" name="label_pluginPath">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
                  <property name="minimumSize">
                   <size>
                    <width>440</width>
@@ -193,10 +199,16 @@ QPushButton:disabled{
                <item>
                 <widget class="QLineEdit" name="lineEdit_UE_versionName">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="minimumSize">
+                  <size>
+                   <width>0</width>
+                   <height>40</height>
+                  </size>
                  </property>
                  <property name="maximumSize">
                   <size>
@@ -224,7 +236,7 @@ QPushButton:disabled{
                   <number>10</number>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft</set>
+                  <set>Qt::AlignmentFlag::AlignBottom|Qt::AlignmentFlag::AlignHCenter</set>
                  </property>
                  <property name="placeholderText">
                   <string>Ex : UE5_7</string>

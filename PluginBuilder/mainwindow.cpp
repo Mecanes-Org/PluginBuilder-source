@@ -9,6 +9,7 @@
 #include <QDir>
 #include <QFile>
 #include <QProcess>
+#include <QDebug>
 
 #include "unrealversions.h"
 #include "settings.h"
@@ -207,8 +208,6 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
          << "-TargetPlatforms=" + ( concatPlatformeList.isEmpty() ? "Win64" : concatPlatformeList );
 
 
-
-
     QProcess *proc = new QProcess;
 
     // voir les logs en temps réel dans la console Qt
@@ -227,10 +226,11 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
         // Ajoute a chaque fois
         ui->label_log->setText( ui->label_log->text() + text );
 
+
     });
 
     // STDERR
-    QObject::connect(proc, &QProcess::readyReadStandardError, [this, proc]() {
+    QObject::connect(proc, &QProcess::readyReadStandardError, [this, &unrealVersion, proc]() {
         // qDebug().noquote() << proc->readAllStandardError();
 
         QString text = QString::fromLocal8Bit(proc->readAllStandardError());
@@ -238,11 +238,14 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
         // Ajouter les erreurs à la suite
         ui->label_log->setText( ui->label_log->text() + "\n[ERR] " + text );
 
+
+        showBuildNotification(false, unrealVersion);
+
     });
 
     QObject::connect(proc,
                      QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                     [this, proc](int exitCode, QProcess::ExitStatus status) {
+                     [this, unrealVersion, proc](int exitCode, QProcess::ExitStatus status) {
 
                          bool ok = (status == QProcess::NormalExit && exitCode == 0);
 
@@ -263,6 +266,8 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
                          proc->deleteLater();
 
                          emit buildFinished(ok, exitCode, QString("\nBuild finished (exitCode=%1)").arg(exitCode));
+
+                         showBuildNotification(false, unrealVersion);
                      });
 
     proc->setProgram( runUatPathComplete );
@@ -304,6 +309,23 @@ void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
     }
 }
 
+void MainWindow::showBuildNotification(const bool &success, const QString &unrealVersion, const QString &text)
+{
+    QLabel *textToShow = new QLabel(this);
+    textToShow->setText( "[ " + unrealVersion + " ]"  );
+
+    if( success ){
+        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build Success" : text ) );
+    }else{
+        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Error Build" : text ) );
+        textToShow->setStyleSheet(""
+                                 "color: rgba(255,0, 0, 0.85);"
+                                 "");
+    }
+
+    ui->scrollAreaWidgetContents_Notification->layout()->addWidget( textToShow );
+}
+
 void MainWindow::clearLayout(QLayout *layout)
 {
     if (!layout)
@@ -333,7 +355,7 @@ void MainWindow::on_pushButton_findPlugin_clicked()
     QFile file(file_name);
 
     if(file_name.isEmpty()){
-        QMessageBox::warning(this, tr("Error"), tr("Incorrect file"));
+        QMessageBox::warning(this, tr("Error"), tr("No file selected"));
         return;
     }
 
@@ -344,6 +366,12 @@ void MainWindow::on_pushButton_findPlugin_clicked()
 
 void MainWindow::on_pushButton_build_clicked()
 {
+
+
+    // CLEAR LAYOUT AVANT D AJOUTER DES LOGS
+    QLayout *layout = ui->scrollAreaWidgetContents_Notification->layout();
+    clearLayout(layout);
+
     QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
 
     foreach (QCheckBox *cb, checkboxes) {

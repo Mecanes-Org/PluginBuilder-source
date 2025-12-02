@@ -505,7 +505,6 @@ QMenuBar,  QStatusBar{
 	background-color: #101828;
 }
 
-
 QMenuBar::item:selected{
 	color: #4198EF;
 }
@@ -545,6 +544,21 @@ QLabel#label_pluginPath{
 	border: 1px solid #E7E5E4 ;
 	border-radius: 2px;
 }
+
+QScrollBar:vertical {
+    background: transparent;
+    min-height: 40px;
+    width: 13px;
+}
+
+QScrollBar::handle:vertical {
+    background: #101828; 
+	min-height: 40px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #1D2939; 
+}
 </string>
   </property>
   <property name="documentMode">
@@ -561,18 +575,19 @@ QLabel#label_pluginPath{
        <widget class="QFrame" name="frame_unrealVersionsList">
         <property name="minimumSize">
          <size>
-          <width>200</width>
+          <width>205</width>
           <height>600</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
-          <width>200</width>
+          <width>205</width>
           <height>16777215</height>
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #020618;</string>
+         <string notr="true">background-color: #020618;
+</string>
         </property>
         <property name="frameShape">
          <enum>QFrame::Shape::StyledPanel</enum>
@@ -627,7 +642,7 @@ QLabel#label_pluginPath{
              </property>
              <property name="maximumSize">
               <size>
-               <width>170</width>
+               <width>16777215</width>
                <height>300</height>
               </size>
              </property>
@@ -636,6 +651,9 @@ QLabel#label_pluginPath{
              </property>
              <property name="title">
               <string>UE5</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignVCenter</set>
              </property>
              <layout class="QVBoxLayout" name="verticalLayout_8">
               <property name="spacing">
@@ -678,7 +696,7 @@ QLabel#label_pluginPath{
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>164</width>
+                   <width>177</width>
                    <height>30</height>
                   </rect>
                  </property>
@@ -747,6 +765,12 @@ QLabel#label_pluginPath{
            </item>
            <item>
             <widget class="QGroupBox" name="groupBox_notif">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="minimumSize">
               <size>
                <width>170</width>
@@ -755,13 +779,123 @@ QLabel#label_pluginPath{
              </property>
              <property name="maximumSize">
               <size>
-               <width>170</width>
+               <width>16777215</width>
                <height>300</height>
               </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
              <property name="title">
               <string>Notifications</string>
              </property>
+             <property name="alignment">
+              <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QScrollArea" name="scrollArea_2">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
+                </property>
+                <property name="widgetResizable">
+                 <bool>true</bool>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                </property>
+                <widget class="QWidget" name="scrollAreaWidgetContents_Notification">
+                 <property name="geometry">
+                  <rect>
+                   <x>0</x>
+                   <y>0</y>
+                   <width>159</width>
+                   <height>55</height>
+                  </rect>
+                 </property>
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Minimum" vsizetype="Maximum">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <pointsize>9</pointsize>
+                   <bold>false</bold>
+                  </font>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QLabel{
+	color: rgba(255, 255, 255, 0.85);
+	font: 500 9pt &quot;Rockwell&quot;;
+}</string>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_10">
+                  <property name="spacing">
+                   <number>5</number>
+                  </property>
+                  <property name="sizeConstraint">
+                   <enum>QLayout::SizeConstraint::SetDefaultConstraint</enum>
+                  </property>
+                  <property name="leftMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>5</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>5</number>
+                  </property>
+                  <item>
+                   <widget class="QLabel" name="label_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>[ UE_5.7 ] Build Success</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_3">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="text">
+                     <string>[ UE_5.6 ] Build error</string>
+                    </property>
+                    <property name="wordWrap">
+                     <bool>true</bool>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </widget>
+               </widget>
+              </item>
+             </layout>
             </widget>
            </item>
           </layout>
@@ -1039,7 +1173,7 @@ QPushButton:disabled{
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: #101828;</string>
+              <string notr="true">background-color:  #101828;</string>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -1085,8 +1219,8 @@ QPushButton:disabled{
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>740</width>
-                   <height>401</height>
+                   <width>738</width>
+                   <height>404</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_9">

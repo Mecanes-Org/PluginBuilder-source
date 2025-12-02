@@ -17,6 +17,8 @@ Settings::Settings(QWidget *parent)
 {
     ui->setupUi(this);
 
+    QList<QCheckBox*> checkBoxList = this->findChildren<QCheckBox*>();
+
     GeneralSettings = data.loadGeneralSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
 
     // qDebug() << "Load A = " << data.getJsonFile_SettingsName() ;
@@ -25,6 +27,15 @@ Settings::Settings(QWidget *parent)
 
     if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
         ui->lineEdit_plugin_dist_path->setText( GeneralSettings.pluginDistPath );
+    }
+
+    // COCHE LES PLATFORM COCHER LORS DE LA SAVE
+    foreach (QString val, GeneralSettings.platformList) {
+        foreach (QCheckBox *valCheckBox, checkBoxList) {
+            if( valCheckBox->text() == val ){
+                valCheckBox->setChecked(true);
+            }
+        }
     }
 
 }
