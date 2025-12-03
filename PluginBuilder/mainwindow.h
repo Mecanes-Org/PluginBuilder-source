@@ -27,11 +27,12 @@ public:
     void prepareToBuild();
     void startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion);
 
+    bool isValidIndex(int &index, int arraySize);
 
     // CLEAR LAYOUT
     void clearLayout(QLayout *layout);
 
-    // Obtenir la structure
+    // Obtenir et modifier la structure
     QList<S_UnrealVersion> getUnrealVersions();
     void setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions);
 

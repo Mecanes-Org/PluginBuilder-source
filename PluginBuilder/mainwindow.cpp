@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // INIT VARIABLES
+    lastPluginBuildIndex = 0;
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
 
@@ -88,6 +89,11 @@ bool MainWindow::canBuild()
 
     QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
 
+    if( checkboxes.length() < 1 ){
+        QMessageBox::warning(this, tr("Unreal Version"), tr("Select at least one verified version of Unreal Engine"));
+        return false;
+    }
+
     foreach (QCheckBox *cb, checkboxes) {
         if (cb->isChecked()) {
             unrealVersionChecked = true;
@@ -108,9 +114,15 @@ void MainWindow::prepareToBuild()
 {
     QString label_pluginPath = ui->label_pluginPath->text();
     QString pluginName = ui->lineEdit_pluginName->text();
+    QString pluginVersion = ui->lineEdit_pluginVersion->text();
 
     if( pluginName.isEmpty() ){
         QMessageBox::warning(this, tr("Plugin Name"), tr("Plugin Name is ivalid") );
+        return;
+    }
+
+    if( pluginVersion.isEmpty() ){
+        QMessageBox::warning(this, tr("Plugin Version"), tr("Plugin Version is ivalid") );
         return;
     }
 
@@ -120,6 +132,21 @@ void MainWindow::prepareToBuild()
                                                          "Go to Edit > Settings > General.") );
         return;
     }
+
+
+
+    if( unrealVersionsChecked.length() < 1 ){
+        QMessageBox::warning(this, tr("Unreal Version"), tr("Be sure to select a version of Unreal Engine."
+                                                            "\n"
+                                                            "Add a version of Unreal Engine (if you don't have one)."
+                                                            "\n"
+                                                            "Go to Edit > Settings > General."
+                                                            "\n"
+                                                            "Otherwise, check one of the versions in the list (on the left) of versions.")  );
+        return;
+    }
+
+
 
     S_GeneralSettings general_settings = getGeneralSettings();
 
@@ -151,6 +178,10 @@ void MainWindow::prepareToBuild()
 
 
     QString unrealPath;
+
+    if( ! isValidIndex( lastPluginBuildIndex, unrealVersionsChecked.length()  ) ){
+        return;
+    }
 
     foreach (S_UnrealVersion val, unrealVersions) {
         if( unrealVersionsChecked.at( lastPluginBuildIndex )->text() == val.name ){
@@ -314,6 +345,11 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
 }
 
+bool MainWindow::isValidIndex(int &index, int arraySize)
+{
+    return !( index < 0 || index >= arraySize );
+}
+
 
 
 
@@ -322,6 +358,7 @@ void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
     unrealVersions = newUnrealVersions;
 
     clearLayout(ui->scrollAreaWidgetContents_UE5->layout());
+
 
     for (const S_UnrealVersion &val : std::as_const(unrealVersions) ) {
         QCheckBox *check = new QCheckBox(val.name, this);
