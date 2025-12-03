@@ -40,18 +40,16 @@ public:
     bool saveSettings( const QString &plugin_dist_path );
     void saveUnrealVersions(QList<S_UnrealVersion> unrealVersions);
 
-
-
-
-    // GETTER & SETTER
     QString getJsonFile_SettingsName() const ;
-
     QString getJsonFile_UnrealVersionName() const;
+
+    // GETTER AND SETTER
+    float getSoftwareVersion() const { return softwareVersion; }
 
 private :
     QString jsonFile_SettingsName = "settings.json";
     QString jsonFile_UnrealVersionName = "unreal_versions.json";
-
+    float softwareVersion;
 };
 
 #endif // DATA_H

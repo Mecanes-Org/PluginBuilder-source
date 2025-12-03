@@ -62,6 +62,9 @@ private:
 
     // l index du dernier plugin qui a été build
     int lastPluginBuildIndex;
+
+
+    bool isBetaVersion;
     Data data;
 
 };

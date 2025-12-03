@@ -14,7 +14,9 @@
 
 Data::Data(QObject *parent)
     : QObject{parent}
-{}
+{
+    softwareVersion = 0.5;
+}
 
 bool Data::getValidFileExist(const QString &filePath)
 {

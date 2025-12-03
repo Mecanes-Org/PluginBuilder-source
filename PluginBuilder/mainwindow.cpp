@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // INIT VARIABLES
+    isBetaVersion = true;
     lastPluginBuildIndex = 0;
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
@@ -59,8 +60,26 @@ MainWindow::MainWindow(QWidget *parent)
         }
     }
 
+    // UI
     ui->pushButton_build->setDisabled(true);
 
+
+    // IS BETA VERSION ???
+    if( isBetaVersion){
+
+        QString textVersion = QString::number( data.getSoftwareVersion() );
+
+        QLabel *label = new QLabel(this);
+        label->setText("Beta Version [ v" + textVersion + " ] ");
+        label->setStyleSheet(""
+                             "border: none;"
+                             "color: yellow;"
+                             "margin: 10px 0 10px 7px;"
+                             "font-size: 15px;"
+                             "");
+
+        ui->statusbar->addPermanentWidget( label, 10 );
+    }
 
     // SIGNAL
     connect(this, &MainWindow::buildFinished, this, &MainWindow::onBuildFinished);

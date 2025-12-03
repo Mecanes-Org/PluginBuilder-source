@@ -816,7 +816,7 @@ QScrollBar::handle:vertical:hover {
                    <x>0</x>
                    <y>0</y>
                    <width>159</width>
-                   <height>55</height>
+                   <height>52</height>
                   </rect>
                  </property>
                  <property name="sizePolicy">
@@ -1275,7 +1275,7 @@ QPushButton:disabled{
                    <x>0</x>
                    <y>0</y>
                    <width>738</width>
-                   <height>405</height>
+                   <height>402</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1384,6 +1384,9 @@ QPushButton:disabled{
   <widget class="QStatusBar" name="statusbar">
    <property name="cursor">
     <cursorShape>ArrowCursor</cursorShape>
+   </property>
+   <property name="layoutDirection">
+    <enum>Qt::LayoutDirection::LeftToRight</enum>
    </property>
   </widget>
   <action name="actionUnreal_Engine">
