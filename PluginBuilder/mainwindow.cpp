@@ -133,6 +133,12 @@ void MainWindow::prepareToBuild()
         return;
     }
 
+    if (!isValidIndex(lastPluginBuildIndex, unrealVersionsChecked.size())) {
+        QMessageBox::warning(this, tr("Unreal Version"),
+                             tr("Internal error: invalid Unreal version index."));
+        return;
+    }
+
 
 
     if( unrealVersionsChecked.length() < 1 ){
@@ -177,17 +183,21 @@ void MainWindow::prepareToBuild()
 
 
 
+    QCheckBox *currentCb = unrealVersionsChecked.at(lastPluginBuildIndex);
     QString unrealPath;
 
-    if( ! isValidIndex( lastPluginBuildIndex, unrealVersionsChecked.length()  ) ){
-        return;
-    }
 
     foreach (S_UnrealVersion val, unrealVersions) {
-        if( unrealVersionsChecked.at( lastPluginBuildIndex )->text() == val.name ){
+        if( currentCb->text() == val.name ){
             unrealPath = val.path;
             break;
         }
+    }
+
+    if (unrealPath.isEmpty()) {
+        QMessageBox::warning(this, tr("Unreal Version"),
+                             tr("The selected Unreal Engine version is not configured."));
+        return;
     }
 
     // qDebug() << " 6 - " << unrealVersionsChecked.at( lastPluginBuildIndex )->text() << "\n" ;
@@ -212,7 +222,7 @@ void MainWindow::prepareToBuild()
                 dirOutput,
                 unrealVersionsChecked.at( lastPluginBuildIndex )->text(),
                 pluginName,
-                "v0.4");
+                ("v"+pluginVersion ) );
 
             // ... ton traitement
             // Quand c'est fini :
@@ -428,6 +438,7 @@ void MainWindow::on_pushButton_findPlugin_clicked()
 
 void MainWindow::on_pushButton_build_clicked()
 {
+    lastPluginBuildIndex = 0;
     unrealVersionsChecked.clear();
 
     // CLEAR LAYOUT AVANT D AJOUTER DES LOGS
