@@ -66,6 +66,7 @@ private:
 
     bool isBetaVersion;
     Data data;
+    S_GeneralSettings generalSettings;
 
 };
 #endif // MAINWINDOW_H

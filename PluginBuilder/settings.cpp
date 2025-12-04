@@ -17,32 +17,62 @@ Settings::Settings(QWidget *parent)
 {
     ui->setupUi(this);
 
-    QList<QCheckBox*> checkBoxList = this->findChildren<QCheckBox*>();
 
-    GeneralSettings = data.loadGeneralSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) );
+    mainWindow = qobject_cast<MainWindow*>(parent);  // note the *
+
+
+    if (mainWindow) {
+        generalSettings = mainWindow->getGeneralSettings();
+    }
+
+    generalSettings = mainWindow->getGeneralSettings();
+
+    QList<QCheckBox*> checkBoxList_platform = ui->frame_target_platform->findChildren<QCheckBox*>();
 
     // qDebug() << "Load A = " << data.getJsonFile_SettingsName() ;
     // qDebug() << "Load B = " << data.getJasonFilePath( data.getJsonFile_SettingsName() ) ;
     // qDebug() << "Load C = " << GeneralSettings.pluginDistPath ;
 
-    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
-        ui->lineEdit_plugin_dist_path->setText( GeneralSettings.pluginDistPath );
+    if( generalSettings.pluginDistPath.length() > 0 ){
+        ui->lineEdit_plugin_dist_path->setText( generalSettings.pluginDistPath );
+    }
+
+    foreach (QString val, data.getNotificationNames() ) {
+        // parent = widget qui contient verticalLayout_CheckBoxNotif
+        QCheckBox *checkboxNotif = new QCheckBox(ui->frame_notifications);
+        checkboxNotif->setText(val);
+        checkboxNotif->setChecked(notificationNameIsChecked(val));
+        checkboxNotif->setCursor(QCursor(Qt::PointingHandCursor));
+
+        ui->verticalLayout_CheckBoxNotif->addWidget(checkboxNotif);
     }
 
     // COCHE LES PLATFORM COCHER LORS DE LA SAVE
-    foreach (QString val, GeneralSettings.platformList) {
-        foreach (QCheckBox *valCheckBox, checkBoxList) {
+    foreach (QString val, generalSettings.platformList) {
+        foreach (QCheckBox *valCheckBox, checkBoxList_platform) {
             if( valCheckBox->text() == val ){
                 valCheckBox->setChecked(true);
             }
         }
     }
 
+
+
 }
 
 Settings::~Settings()
 {
     delete ui;
+}
+
+bool Settings::notificationNameIsChecked(QString &notificationName) const
+{
+    foreach (QString val, generalSettings.notifications) {
+        if( val == notificationName ){
+            return true;
+        }
+    }
+    return false;
 }
 
 void Settings::on_pushButton_find_plugin_dist_clicked()
@@ -54,24 +84,23 @@ void Settings::on_pushButton_find_plugin_dist_clicked()
     }else{
         QMessageBox::warning(this, tr("Error"), tr("Incorrect file"));
     }
-
-
 }
 
 
 void Settings::on_buttonBox_accepted()
 {
     S_GeneralSettings generalSettings ;
-
     QList<QString> platformList;
+    QList<QString> notificationsList;
 
-    QList<QCheckBox*> checkBoxes = this->findChildren<QCheckBox*>();
+    QList<QCheckBox*> checkBoxes_target_platform = ui->frame_target_platform->findChildren<QCheckBox*>();
+    QList<QCheckBox*> checkBoxes_notifications = ui->frame_notifications->findChildren<QCheckBox*>();
 
 
-    // qDebug() << "Taille : " << checkBoxes.length() ;
+    // qDebug() << "Taille : " << checkBoxes_notifications.length() ;
 
 
-    foreach (QCheckBox *val, checkBoxes) {
+    foreach (QCheckBox *val, checkBoxes_target_platform) {
 
         if( val->isChecked() ){
             // qDebug() << "Name : " << val->text() << " \n" ;
@@ -79,8 +108,17 @@ void Settings::on_buttonBox_accepted()
         }
     }
 
+    foreach (QCheckBox *val, checkBoxes_notifications) {
+
+        if( val->isChecked() ){
+            // qDebug() << "Name : " << val->text() << " \n" ;
+            notificationsList.append( val->text() );
+        }
+    }
+
     generalSettings.platformList = platformList;
     generalSettings.pluginDistPath = ui->lineEdit_plugin_dist_path->text();
+    generalSettings.notifications = notificationsList;
 
 
     if( !data.saveGeneralSettings( generalSettings ) ){

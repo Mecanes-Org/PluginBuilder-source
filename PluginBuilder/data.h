@@ -14,6 +14,7 @@ struct S_UnrealVersion
 struct S_GeneralSettings {
     QString pluginDistPath;
     QList<QString> platformList;
+    QList<QString> notifications;
 };
 
 
@@ -45,11 +46,14 @@ public:
 
     // GETTER AND SETTER
     float getSoftwareVersion() const { return softwareVersion; }
+    QList<QString> getNotificationNames() const { return notificationNames;}
 
 private :
     QString jsonFile_SettingsName = "settings.json";
     QString jsonFile_UnrealVersionName = "unreal_versions.json";
     float softwareVersion;
+
+    QList<QString> notificationNames;
 };
 
 #endif // DATA_H

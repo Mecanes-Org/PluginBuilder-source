@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
     // INIT VARIABLES
     isBetaVersion = true;
     lastPluginBuildIndex = 0;
+    generalSettings = getGeneralSettings();
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
 
@@ -72,7 +73,6 @@ MainWindow::MainWindow(QWidget *parent)
         QLabel *label = new QLabel(this);
         label->setText("Beta Version [ v" + textVersion + " ] ");
         label->setStyleSheet(""
-                             "border: none;"
                              "color: yellow;"
                              "margin: 10px 0 10px 7px;"
                              "font-size: 15px;"
@@ -88,7 +88,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-
 }
 
 S_GeneralSettings MainWindow::getGeneralSettings()
@@ -171,16 +170,12 @@ void MainWindow::prepareToBuild()
         return;
     }
 
-
-
-    S_GeneralSettings general_settings = getGeneralSettings();
-
     // QString dirOutput = R"(C:/Users/MEC/Project/Programmation/)";
 
     QString dirOutput = "";
 
     if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
-        dirOutput = general_settings.pluginDistPath;
+        dirOutput = generalSettings.pluginDistPath;
 
         dirOutput.replace('\\', '/');
 
@@ -253,7 +248,6 @@ void MainWindow::prepareToBuild()
 
 void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion)
 {
-    S_GeneralSettings general_settings = getGeneralSettings();
     QString concatPlatformeList;
 
     ui->label_log->setText( tr("Build ... \n"));
@@ -268,7 +262,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     // qDebug() <<  "-Package=" + QDir::toNativeSeparators( outputDir );
     // qDebug() << "-TargetPlatforms=Win64";
 
-    foreach (QString platform, general_settings.platformList) {
+    foreach (QString platform, generalSettings.platformList) {
         concatPlatformeList += ( "+" + platform );
     }
 
@@ -402,6 +396,18 @@ void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
 
 void MainWindow::showBuildNotification(const bool &success, const QString &unrealVersion, const QString &text)
 {
+    bool enabledBuildNotif = false;
+
+    foreach (QString text , generalSettings.notifications) {
+        enabledBuildNotif = ( text.toLower() == "build" );
+    }
+
+    if( !enabledBuildNotif ){
+        // qDebug() << "NO NOTIF";
+        return;
+    }
+
+
     QLabel *textToShow = new QLabel(this);
     textToShow->setText( "[ " + unrealVersion + " ]"  );
 
@@ -423,6 +429,7 @@ void MainWindow::clearLayout(QLayout *layout)
         return;
 
     QLayoutItem *item;
+
     while ((item = layout->takeAt(0)) != nullptr) {
         if (QWidget *w = item->widget()) {
             w->deleteLater();   // détruire le widget
@@ -464,13 +471,15 @@ void MainWindow::on_pushButton_build_clicked()
     QLayout *layout = ui->scrollAreaWidgetContents_Notification->layout();
     clearLayout(layout);
 
-    QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
+    QList<QCheckBox*> checkboxes = ui->groupBox_UE5->findChildren<QCheckBox*>();
 
     foreach (QCheckBox *cb, checkboxes) {
         if (cb->isChecked()) {
             unrealVersionsChecked.append(cb);
         }
     }
+
+    // qDebug() << "Length : " << unrealVersionsChecked.length();
 
     prepareToBuild();
 

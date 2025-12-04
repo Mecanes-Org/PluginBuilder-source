@@ -697,7 +697,7 @@ QScrollBar::handle:vertical:hover {
                    <x>0</x>
                    <y>0</y>
                    <width>177</width>
-                   <height>30</height>
+                   <height>16</height>
                   </rect>
                  </property>
                  <property name="sizePolicy">
@@ -725,37 +725,6 @@ QScrollBar::handle:vertical:hover {
                   <property name="bottomMargin">
                    <number>5</number>
                   </property>
-                  <item>
-                   <widget class="QCheckBox" name="checkBox_UE_5_4">
-                    <property name="enabled">
-                     <bool>false</bool>
-                    </property>
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>80</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>80</width>
-                      <height>20</height>
-                     </size>
-                    </property>
-                    <property name="cursor">
-                     <cursorShape>PointingHandCursor</cursorShape>
-                    </property>
-                    <property name="text">
-                     <string>UE_5.4</string>
-                    </property>
-                   </widget>
-                  </item>
                  </layout>
                 </widget>
                </widget>
@@ -816,7 +785,7 @@ QScrollBar::handle:vertical:hover {
                    <x>0</x>
                    <y>0</y>
                    <width>159</width>
-                   <height>52</height>
+                   <height>16</height>
                   </rect>
                  </property>
                  <property name="sizePolicy">
@@ -856,41 +825,6 @@ QScrollBar::handle:vertical:hover {
                   <property name="bottomMargin">
                    <number>5</number>
                   </property>
-                  <item>
-                   <widget class="QLabel" name="label_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>[ UE_5.7 ] Build Success</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignmentFlag::AlignLeading|Qt::AlignmentFlag::AlignLeft|Qt::AlignmentFlag::AlignTop</set>
-                    </property>
-                    <property name="wordWrap">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QLabel" name="label_3">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="text">
-                     <string>[ UE_5.6 ] Build error</string>
-                    </property>
-                    <property name="wordWrap">
-                     <bool>true</bool>
-                    </property>
-                   </widget>
-                  </item>
                  </layout>
                 </widget>
                </widget>

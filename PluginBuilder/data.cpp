@@ -16,6 +16,10 @@ Data::Data(QObject *parent)
     : QObject{parent}
 {
     softwareVersion = 0.5;
+
+    notificationNames.append("Build");
+    notificationNames.append("Software update");
+    notificationNames.append("Popup");
 }
 
 bool Data::getValidFileExist(const QString &filePath)
@@ -69,8 +73,9 @@ S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
 
         QString pluginDistPath = generalObj.value("plugin_dist_path").toString();
 
-        QList<QString> platformListGeneral;
+        QList<QString> platformListGeneral, notificationsList;
         QJsonArray platformArray = generalObj.value("platform_list").toArray();
+        QJsonArray notificationArray = generalObj.value("notifications").toArray();
 
         for (const QJsonValue &v : std::as_const(platformArray) ){
             if (v.isString()){
@@ -78,8 +83,15 @@ S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
             }
         }
 
+        for (const QJsonValue &v : std::as_const(notificationArray) ){
+            if (v.isString()){
+                notificationsList.append(v.toString());
+            }
+        }
+
         result.pluginDistPath = pluginDistPath;
         result.platformList = platformListGeneral;
+        result.notifications = notificationsList;
     }
 
     return result;
@@ -153,15 +165,20 @@ bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
 {
     const QString folderPath = getJasonFilePath( getJsonFile_SettingsName() );
 
-    QJsonArray platformArray, generalSettingsArray;
+    QJsonArray platformArray, notificationArray, generalSettingsArray;
     QJsonObject root, generalObj;
 
     for (const QString &p : generalSettingsIn.platformList) {
         platformArray.append(p);
     }
 
+    for (const QString &p : generalSettingsIn.notifications) {
+        notificationArray.append(p);
+    }
+
     generalObj["platform_list"] = platformArray;
     generalObj["plugin_dist_path"] = generalSettingsIn.pluginDistPath ;
+    generalObj["notifications"] = notificationArray;
 
     generalSettingsArray.append(generalObj);
 

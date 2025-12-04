@@ -2,6 +2,7 @@
 #define SETTINGS_H
 
 #include "data.h"
+#include "mainwindow.h"
 
 #include <QDialog>
 
@@ -18,7 +19,7 @@ public:
     ~Settings();
 
     QString getSettingsFilePath();
-
+    bool notificationNameIsChecked(QString &notificationName) const;
 
 private slots:
     void on_pushButton_find_plugin_dist_clicked();
@@ -30,9 +31,9 @@ private:
 
     QString defaultDir;
 
-    S_GeneralSettings GeneralSettings;
-
+    S_GeneralSettings generalSettings;
     Data data;
+    MainWindow *mainWindow = nullptr;
 };
 
 #endif // SETTINGS_H
