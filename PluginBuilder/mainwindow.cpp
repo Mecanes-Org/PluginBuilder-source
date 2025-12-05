@@ -78,7 +78,7 @@ MainWindow::MainWindow(QWidget *parent)
                              "font-size: 15px;"
                              "");
 
-        ui->statusbar->addPermanentWidget( label, 10 );
+        ui->statusbar->addPermanentWidget( label, 1 );
     }
 
     // SIGNAL
