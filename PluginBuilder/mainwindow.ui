@@ -495,7 +495,8 @@
    <string>Plugin Builder</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="QIcon::ThemeIcon::WeatherClear"/>
+   <iconset resource="resources.qrc">
+    <normaloff>:/resources/images/logo/PluginBuilder.png</normaloff>:/resources/images/logo/PluginBuilder.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QWidget{
@@ -1311,6 +1312,7 @@ QPushButton:disabled{
     <property name="title">
      <string>About Us</string>
     </property>
+    <addaction name="actioninfos"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuAbout_Us"/>
@@ -1348,23 +1350,17 @@ QPushButton:disabled{
     <string>Settings</string>
    </property>
   </action>
-  <action name="actionAbout_us">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::HelpAbout"/>
+  <action name="actioninfos">
+   <property name="checkable">
+    <bool>false</bool>
    </property>
    <property name="text">
-    <string>About us</string>
-   </property>
-  </action>
-  <action name="actionDiscord">
-   <property name="icon">
-    <iconset theme="QIcon::ThemeIcon::InsertLink"/>
-   </property>
-   <property name="text">
-    <string>Discord</string>
+    <string>Infos</string>
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections/>
 </ui>

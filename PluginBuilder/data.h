@@ -18,6 +18,12 @@ struct S_GeneralSettings {
 };
 
 
+enum E_Reseaux{
+    FAB,
+    DISCORD
+};
+
+
 
 class Data : public QObject
 {
@@ -48,12 +54,21 @@ public:
     float getSoftwareVersion() const { return softwareVersion; }
     QList<QString> getNotificationNames() const { return notificationNames;}
 
+    // RESEAUX
+    void openLink(E_Reseaux reseaux) const;
+
 private :
     QString jsonFile_SettingsName = "settings.json";
     QString jsonFile_UnrealVersionName = "unreal_versions.json";
-    float softwareVersion;
+    float softwareVersion = 0.6;
 
     QList<QString> notificationNames;
+
+    // RESEAUX
+
+    QString fabLink = "https://www.fab.com/sellers/Mecanes";
+    QString discordLink = "https://discord.com/invite/xb78rVQ7F2";
+
 };
 
 #endif // DATA_H

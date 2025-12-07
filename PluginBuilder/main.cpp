@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     // 3) Fenêtre principale
     MainWindow w;
 
+    w.setWindowIcon(QIcon(":/resources/images/logo/PluginBuilder.png"));
+
     // &loading, &w; { ... }
     // - C’est une lambda (fonction anonyme C++).
 

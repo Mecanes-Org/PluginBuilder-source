@@ -3,5 +3,9 @@
         <file>images/check-icon.png</file>
         <file>images/check-disabled-icon.png</file>
         <file>images/logo/plugin-builder-bg.png</file>
+        <file>images/logo/PluginBuilder.png</file>
+        <file>images/logo/PluginBuilder.ico</file>
+        <file>images/reseaux/discord.png</file>
+        <file>images/reseaux/unrealEngine.png</file>
     </qresource>
 </RCC>

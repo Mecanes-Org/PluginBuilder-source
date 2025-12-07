@@ -11,11 +11,14 @@
 #include <QJsonObject>
 #include <QJsonDocument>
 
+// EXTERNAL LINK
+#include <QDesktopServices>
+#include <QUrl>
+
 
 Data::Data(QObject *parent)
     : QObject{parent}
 {
-    softwareVersion = 0.5;
 
     notificationNames.append("Build");
     notificationNames.append("Software update");
@@ -269,4 +272,22 @@ QString Data::getJsonFile_SettingsName() const
 QString Data::getJsonFile_UnrealVersionName() const
 {
     return jsonFile_UnrealVersionName;
+}
+
+void Data::openLink(E_Reseaux reseaux) const
+{
+    QString reseau;
+
+    switch (reseaux) {
+    case FAB:
+        reseau = fabLink;
+        break;
+    case DISCORD:
+        reseau = discordLink;
+        break;
+    default:
+        break;
+    }
+
+    QDesktopServices::openUrl( QUrl(reseau) );
 }

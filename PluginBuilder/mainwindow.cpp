@@ -13,6 +13,7 @@
 
 #include "unrealversions.h"
 #include "settings.h"
+#include "aboutus.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -28,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
 
+    // UNREAL VERSION -
     if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
         unrealVersions = data.loadUnrealVersions( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) );
 
@@ -65,13 +67,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->pushButton_build->setDisabled(true);
 
 
-    // IS BETA VERSION ???
+    // IS BETA VERSION ?
     if( isBetaVersion){
 
         QString textVersion = QString::number( data.getSoftwareVersion() );
 
         QLabel *label = new QLabel(this);
-        label->setText("Beta Version [ v" + textVersion + " ] ");
+        label->setText("Beta Version - " +  QString::number( data.getSoftwareVersion() ));
         label->setStyleSheet(""
                              "color: yellow;"
                              "margin: 10px 0 10px 7px;"
@@ -524,3 +526,10 @@ void MainWindow::onBuildFinished(bool success, int exitCode,const QString &logMe
     }
 
 }
+
+void MainWindow::on_actioninfos_triggered()
+{
+    AboutUs aboutUs(this);
+    aboutUs.exec();
+}
+
