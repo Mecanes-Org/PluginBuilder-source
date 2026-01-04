@@ -31,7 +31,6 @@ ui_*.h
 qrc_*.cpp
 Thumbs.db
 *.res
-*.rc
 /.qmake.cache
 /.qmake.stash
 
@@ -80,3 +79,7 @@ CMakeLists.txt.user*
 .rcc/
 .uic/
 /build*/
+
+
+# Allow this specific resource file
+!PluginBuilder.rc

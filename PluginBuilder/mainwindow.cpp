@@ -23,18 +23,49 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     // INIT VARIABLES
-    isBetaVersion = true;
     lastPluginBuildIndex = 0;
     generalSettings = getGeneralSettings();
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
 
     // UNREAL VERSION -
-    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
-        unrealVersions = data.loadUnrealVersions( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) );
+    // if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
+    //     unrealVersions = data.loadUnrealVersions( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) );
 
-        for (const S_UnrealVersion &val : std::as_const( unrealVersions ) ) {
-            QCheckBox *check = new QCheckBox(val.name, this);
+    //     for (const S_UnrealVersion &val : std::as_const( unrealVersions ) ) {
+    //         QCheckBox *check = new QCheckBox(val.unrealName, this);
+    //         check->setCursor( QCursor(Qt::PointingHandCursor) );
+
+    //         // SI C EST OBSELETE ALORS UPDATE THE COLOR
+    //         if( val.isObsolete ){
+    //             check->setStyleSheet(
+
+    //                 "QCheckBox {"
+    //                     "color: #BB4D1A;"
+    //                 "}"
+
+    //                 "QCheckBox::indicator {"
+    //                      "border-style: solid;"
+    //                      "border-width: 1px;"
+    //                      "border-color: #BB4D1A;"
+    //                      "color: #BB4D1A;"
+    //                 "}"
+
+    //                 );
+
+    //         }
+
+    //         // Ajouter le checkbox dans le layout du scrollArea
+    //         if (ui->scrollAreaWidgetContents_UE5->layout()) {
+    //             ui->scrollAreaWidgetContents_UE5->layout()->addWidget(check);
+    //         }
+    //     }
+    // }
+
+    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
+
+        for (const S_UnrealVersion &val : std::as_const( generalSettings.S_UnrealVersionsList ) ) {
+            QCheckBox *check = new QCheckBox(val.unrealName, this);
             check->setCursor( QCursor(Qt::PointingHandCursor) );
 
             // SI C EST OBSELETE ALORS UPDATE THE COLOR
@@ -42,14 +73,14 @@ MainWindow::MainWindow(QWidget *parent)
                 check->setStyleSheet(
 
                     "QCheckBox {"
-                        "color: #BB4D1A;"
+                    "color: #BB4D1A;"
                     "}"
 
                     "QCheckBox::indicator {"
-                         "border-style: solid;"
-                         "border-width: 1px;"
-                         "border-color: #BB4D1A;"
-                         "color: #BB4D1A;"
+                    "border-style: solid;"
+                    "border-width: 1px;"
+                    "border-color: #BB4D1A;"
+                    "color: #BB4D1A;"
                     "}"
 
                     );
@@ -64,11 +95,11 @@ MainWindow::MainWindow(QWidget *parent)
     }
 
     // UI
-    ui->pushButton_build->setDisabled(true);
+
 
 
     // IS BETA VERSION ?
-    if( isBetaVersion){
+    if( data.getSoftwareVersion() < 1){
 
         QString textVersion = QString::number( data.getSoftwareVersion() );
 
@@ -83,6 +114,32 @@ MainWindow::MainWindow(QWidget *parent)
         ui->statusbar->addPermanentWidget( label, 1 );
     }
 
+
+    // UI - INIT
+    ui->label_pluginPath->setText(
+        generalSettings.S_LastPlugin.pluginPath.isEmpty()
+            ? QString()
+            : generalSettings.S_LastPlugin.pluginPath
+        );
+
+    ui->lineEdit_pluginName->setText(
+        generalSettings.S_LastPlugin.pluginName.isEmpty()
+            ? QString()
+            : generalSettings.S_LastPlugin.pluginName
+        );
+
+
+    ui->lineEdit_pluginVersion->setText(
+        generalSettings.S_LastPlugin.pluginVersion.isEmpty()
+            ? QString()
+            : generalSettings.S_LastPlugin.pluginVersion
+        );
+
+    if( ui->label_pluginPath->text().length() < 1 ){
+        ui->pushButton_build->setDisabled(true);
+    }
+
+
     // SIGNAL
     connect(this, &MainWindow::buildFinished, this, &MainWindow::onBuildFinished);
 }
@@ -94,7 +151,9 @@ MainWindow::~MainWindow()
 
 S_GeneralSettings MainWindow::getGeneralSettings()
 {
-    return data.loadGeneralSettings();
+    generalSettings = data.loadGeneralSettings();
+
+    return generalSettings;
 }
 
 bool MainWindow::canBuild()
@@ -107,7 +166,7 @@ bool MainWindow::canBuild()
 
     bool unrealVersionChecked = false;
 
-    QList<QCheckBox*> checkboxes = this->findChildren<QCheckBox*>();
+    QList<QCheckBox*> checkboxes = ui->groupBox_UE5->findChildren<QCheckBox*>();
 
     if( checkboxes.length() < 1 ){
         QMessageBox::warning(this, tr("Unreal Version"), tr("Select at least one verified version of Unreal Engine"));
@@ -125,6 +184,7 @@ bool MainWindow::canBuild()
         QMessageBox::warning(this, tr("Unreal Version"), tr("Unreal version is not valid"));
         return false;
     }
+
 
 
     return true;
@@ -153,13 +213,6 @@ void MainWindow::prepareToBuild()
         return;
     }
 
-    if (!isValidIndex(lastPluginBuildIndex, unrealVersionsChecked.size())) {
-        QMessageBox::warning(this, tr("Unreal Version"),
-                             tr("Internal error: invalid Unreal version index."));
-        return;
-    }
-
-
 
     if( unrealVersionsChecked.length() < 1 ){
         QMessageBox::warning(this, tr("Unreal Version"), tr("Be sure to select a version of Unreal Engine."
@@ -169,6 +222,12 @@ void MainWindow::prepareToBuild()
                                                             "Go to Edit > Settings > General."
                                                             "\n"
                                                             "Otherwise, check one of the versions in the list (on the left) of versions.")  );
+        return;
+    }
+
+    if (!isValidIndex(lastPluginBuildIndex, unrealVersionsChecked.size())) {
+        QMessageBox::warning(this, tr("Unreal Version"),
+                             tr("Internal error: invalid Unreal version index."));
         return;
     }
 
@@ -203,9 +262,11 @@ void MainWindow::prepareToBuild()
     QString unrealPath;
 
 
-    foreach (S_UnrealVersion val, unrealVersions) {
-        if( currentCb->text() == val.name ){
-            unrealPath = val.path;
+    foreach (S_UnrealVersion val, generalSettings.S_UnrealVersionsList) {
+
+        if( currentCb->text() == val.unrealName ){
+            unrealPath = val.unrealPath;
+
             break;
         }
     }
@@ -239,6 +300,12 @@ void MainWindow::prepareToBuild()
                 unrealVersionsChecked.at( lastPluginBuildIndex )->text(),
                 pluginName,
                 ("v"+pluginVersion ) );
+
+            generalSettings.S_LastPlugin.pluginName = ui->lineEdit_pluginName->text();
+            generalSettings.S_LastPlugin.pluginPath =  ui->label_pluginPath->text();
+            generalSettings.S_LastPlugin.pluginVersion = ui->lineEdit_pluginVersion->text();
+
+            data.saveGeneralSettings( generalSettings );
 
             // ... ton traitement
             // Quand c'est fini :
@@ -298,7 +365,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
         QByteArray data = proc->readAllStandardOutput();
 
         // Affiche en debug
-        qDebug().noquote() << data;
+        // qDebug().noquote() << data;
 
         // Convertir en QString
         QString text = QString::fromLocal8Bit(data);
@@ -326,7 +393,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     // STDOUT
     QObject::connect(proc,
                      QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                     [this, unrealVersion, proc](int exitCode, QProcess::ExitStatus status) {
+                     [this, unrealVersion, proc, outputDir](int exitCode, QProcess::ExitStatus status) {
 
                          bool ok = (status == QProcess::NormalExit && exitCode == 0);
 
@@ -345,6 +412,11 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
                          this->setCursor(QCursor(Qt::ArrowCursor));
 
                          proc->deleteLater();
+
+                         if( ok ){
+                            postBuild( outputDir );
+                         }
+
 
                          emit buildFinished(ok, exitCode, QString("\nBuild finished (exitCode=%1)").arg(exitCode));
 
@@ -370,6 +442,28 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
 }
 
+void MainWindow::postBuild( QString outputDir )
+{
+    if( generalSettings.distribution.length() < 1 ){
+        return;
+    }
+
+    QDir dir;
+
+    if( dir.exists( outputDir + "/Intermediate" ) ){
+        dir.setPath( outputDir + "/Intermediate" );
+        dir.removeRecursively();
+    }
+
+    if( dir.exists( outputDir + "/Binaries" ) ){
+        dir.setPath( outputDir + "/Binaries" );
+        dir.removeRecursively();
+    };
+
+    // ZIP
+
+}
+
 bool MainWindow::isValidIndex(int &index, int arraySize)
 {
     return !( index < 0 || index >= arraySize );
@@ -380,13 +474,14 @@ bool MainWindow::isValidIndex(int &index, int arraySize)
 
 void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
 {
-    unrealVersions = newUnrealVersions;
+    // unrealVersions = newUnrealVersions;
+    generalSettings.S_UnrealVersionsList = newUnrealVersions;
 
     clearLayout(ui->scrollAreaWidgetContents_UE5->layout());
 
 
-    for (const S_UnrealVersion &val : std::as_const(unrealVersions) ) {
-        QCheckBox *check = new QCheckBox(val.name, this);
+    for (const S_UnrealVersion &val : std::as_const(generalSettings.S_UnrealVersionsList) ) {
+        QCheckBox *check = new QCheckBox(val.unrealName, this);
         check->setCursor( QCursor(Qt::PointingHandCursor) );
 
         // Ajouter le checkbox dans le layout du scrollArea
@@ -443,10 +538,10 @@ void MainWindow::clearLayout(QLayout *layout)
     }
 }
 
-QList<S_UnrealVersion> MainWindow::getUnrealVersions()
-{
-    return unrealVersions;
-}
+// QList<S_UnrealVersion> MainWindow::getUnrealVersions()
+// {
+//     return unrealVersions;
+// }
 
 
 void MainWindow::on_pushButton_findPlugin_clicked()
@@ -518,8 +613,10 @@ void MainWindow::onBuildFinished(bool success, int exitCode,const QString &logMe
     // ou un QDialog personnalisé si tu préfères
 
     if( lastPluginBuildIndex < ( unrealVersionsChecked.length() -1 )  ){
+
         ++lastPluginBuildIndex;
         prepareToBuild();
+
 
     }else{
         unrealVersionsChecked.clear();

@@ -33,8 +33,8 @@ void UnrealVersionSlot::setUnrealVersion(S_UnrealVersion unrealV)
 {
     unrealVersion = unrealV;
 
-    ui->lineEdit_UE_versionName->setText(unrealVersion.name);
-    ui->label_pluginPath->setText(unrealVersion.path);
+    ui->lineEdit_UE_versionName->setText(unrealVersion.unrealName);
+    ui->label_pluginPath->setText(unrealVersion.unrealPath);
 }
 
 void UnrealVersionSlot::on_pushButton_find_clicked()
