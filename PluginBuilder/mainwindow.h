@@ -26,6 +26,7 @@ public:
     bool canBuild();
     void prepareToBuild();
     void startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion);
+    void postBuild( QString outputDir );
 
     bool isValidIndex(int &index, int arraySize);
 
@@ -58,15 +59,12 @@ signals:
 private:
     Ui::MainWindow *ui;
 
-    QList<S_UnrealVersion> unrealVersions;
+    // QList<S_UnrealVersion> unrealVersions;
     QList<QCheckBox*> unrealVersionsChecked;
     QString runUatFilePath;
 
     // l index du dernier plugin qui a été build
     int lastPluginBuildIndex;
-
-
-    bool isBetaVersion;
     Data data;
     S_GeneralSettings generalSettings;
 

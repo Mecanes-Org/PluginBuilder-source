@@ -17,6 +17,7 @@ UnrealVersions::UnrealVersions(QWidget *parent)
     mainWin = qobject_cast<MainWindow*>(parent);
 
 
+
     // for (int i = 0; i < 3; ++i) {
     //     UnrealVersionSlot *slot = new UnrealVersionSlot(ui->scrollAreaWidgetContents_UE);
     //     ui->scrollAreaWidgetContents_UE->layout()->addWidget(slot);
@@ -25,7 +26,7 @@ UnrealVersions::UnrealVersions(QWidget *parent)
     // INIT VARIABLES
     if( mainWin ){
 
-        for (const S_UnrealVersion &val : mainWin->getUnrealVersions() ) {
+        for (const S_UnrealVersion &val : mainWin->getGeneralSettings().S_UnrealVersionsList ) {
 
             UnrealVersionSlot *slot = new UnrealVersionSlot(ui->scrollAreaWidgetContents_UE);
             slot->setUnrealVersion(val);
@@ -56,6 +57,7 @@ void UnrealVersions::on_buttonBox_accepted()
 {
 
     QList<S_UnrealVersion> unrealVersions;
+    S_GeneralSettings generalSettings = mainWin->getGeneralSettings();
 
     QList<UnrealVersionSlot*> unrealVSlot = this->findChildren<UnrealVersionSlot*>();
 
@@ -69,25 +71,29 @@ void UnrealVersions::on_buttonBox_accepted()
 
 
             if( ( slot->getLabel_pluginPathText().length() > 5 && slot->getLabel_pluginPathText() != "Plugin Link" ) &&  slot->getLineEdit_UE_versionNameText().length() > 1 ){
-
                 S_UnrealVersion sUV;
-                sUV.path = slot->getLabel_pluginPathText();
-                sUV.name = slot->getLineEdit_UE_versionNameText();
+                sUV.unrealPath = slot->getLabel_pluginPathText();
+                sUV.unrealName = slot->getLineEdit_UE_versionNameText();
 
                 unrealVersions.append(sUV); // N’oublie pas d’ajouter à ta liste
             }
         }
 
+        generalSettings.S_UnrealVersionsList = unrealVersions;
+
         if (mainWin) {
-            // Tu peux maintenant appeler des méthodes / accéder à des membres publics
-            mainWin->setUnrealVersions(unrealVersions);
-            data.saveUnrealVersions(unrealVersions);
+            data.saveGeneralSettings( generalSettings );
+            mainWin->setUnrealVersions( generalSettings.S_UnrealVersionsList );
+            // data.saveUnrealVersions(unrealVersions);
         }
-    }else{
+    }
+    else{
         if (mainWin) {
-            // Tu peux maintenant appeler des méthodes / accéder à des membres publics
-            mainWin->setUnrealVersions(unrealVersions);
-            data.saveUnrealVersions(unrealVersions);
+            generalSettings.S_UnrealVersionsList = QList<S_UnrealVersion>();
+
+            data.saveGeneralSettings( generalSettings );
+            mainWin->setUnrealVersions( unrealVersions );
+            // data.saveUnrealVersions(unrealVersions);
         }
     }
 

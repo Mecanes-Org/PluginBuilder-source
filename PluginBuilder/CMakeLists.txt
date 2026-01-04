@@ -25,7 +25,7 @@ set(PROJECT_SOURCES
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
-    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/PluginBuilder.rc")
+    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/images/logo/PluginBuilder.rc")
     message(STATUS "RC path = ${app_icon_resource_windows}")
 
 

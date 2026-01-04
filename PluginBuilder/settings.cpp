@@ -25,9 +25,8 @@ Settings::Settings(QWidget *parent)
         generalSettings = mainWindow->getGeneralSettings();
     }
 
-    generalSettings = mainWindow->getGeneralSettings();
-
     QList<QCheckBox*> checkBoxList_platform = ui->frame_target_platform->findChildren<QCheckBox*>();
+    QList<QCheckBox*> distributionList = ui->frame_post_build_tasks->findChildren<QCheckBox*>();
 
     // qDebug() << "Load A = " << data.getJsonFile_SettingsName() ;
     // qDebug() << "Load B = " << data.getJasonFilePath( data.getJsonFile_SettingsName() ) ;
@@ -50,6 +49,15 @@ Settings::Settings(QWidget *parent)
     // COCHE LES PLATFORM COCHER LORS DE LA SAVE
     foreach (QString val, generalSettings.platformList) {
         foreach (QCheckBox *valCheckBox, checkBoxList_platform) {
+            if( valCheckBox->text() == val ){
+                valCheckBox->setChecked(true);
+            }
+        }
+    }
+
+    // COCHE LES POST BUILDS TASK
+    foreach (QString val, generalSettings.distribution) {
+        foreach (QCheckBox *valCheckBox, distributionList) {
             if( valCheckBox->text() == val ){
                 valCheckBox->setChecked(true);
             }
@@ -89,15 +97,15 @@ void Settings::on_pushButton_find_plugin_dist_clicked()
 
 void Settings::on_buttonBox_accepted()
 {
-    S_GeneralSettings generalSettings ;
     QList<QString> platformList;
     QList<QString> notificationsList;
+    QList<QString> distributionList;
 
     QList<QCheckBox*> checkBoxes_target_platform = ui->frame_target_platform->findChildren<QCheckBox*>();
     QList<QCheckBox*> checkBoxes_notifications = ui->frame_notifications->findChildren<QCheckBox*>();
+    QList<QCheckBox*> checkBoxes_distribution = ui->frame_post_build_tasks->findChildren<QCheckBox*>();
 
-
-    // qDebug() << "Taille : " << checkBoxes_notifications.length() ;
+    // qDebug() << "Taille : " << checkBoxes_distribution.length() ;
 
 
     foreach (QCheckBox *val, checkBoxes_target_platform) {
@@ -116,9 +124,18 @@ void Settings::on_buttonBox_accepted()
         }
     }
 
+    foreach (QCheckBox *val, checkBoxes_distribution) {
+
+        if( val->isChecked() ){
+            //qDebug() << "Name : " << val->text() << " \n" ;
+            distributionList.append( val->text() );
+        }
+    }
+
     generalSettings.platformList = platformList;
     generalSettings.pluginDistPath = ui->lineEdit_plugin_dist_path->text();
     generalSettings.notifications = notificationsList;
+    generalSettings.distribution = distributionList;
 
 
     if( !data.saveGeneralSettings( generalSettings ) ){
