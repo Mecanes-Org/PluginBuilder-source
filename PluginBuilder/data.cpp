@@ -41,7 +41,8 @@ QString Data::getJasonFilePath(const QString &filename)
         }
     }
 
-    return d.filePath( "data/" + filename);
+    QString filePath = d.filePath("data/" + filename);
+    return filePath;
 }
 
 S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
@@ -160,38 +161,38 @@ S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
 //     return result;
 // }
 
-QList<S_UnrealVersion> Data::loadUnrealVersions(const QString &filePath)
-{
+// QList<S_UnrealVersion> Data::loadUnrealVersions(const QString &filePath)
+// {
 
-    QList<S_UnrealVersion> result;
-    QFile file( ( filePath.isEmpty() ) ? getJasonFilePath( getJsonFile_UnrealVersionName() ) : filePath );
+//     QList<S_UnrealVersion> result;
+//     QFile file( ( filePath.isEmpty() ) ? getJasonFilePath( getJsonFile_UnrealVersionName() ) : filePath );
 
 
-    if (!file.open(QIODevice::ReadOnly))
-        return result; // GERER LES ERREUR ...
+//     if (!file.open(QIODevice::ReadOnly))
+//         return result; // GERER LES ERREUR ...
 
-    const QByteArray data = file.readAll();
-    file.close();
+//     const QByteArray data = file.readAll();
+//     file.close();
 
-    QJsonParseError err;
-    QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-    if (err.error != QJsonParseError::NoError || !doc.isArray())
-        return result;
+//     QJsonParseError err;
+//     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
+//     if (err.error != QJsonParseError::NoError || !doc.isArray())
+//         return result;
 
-    QJsonArray arr = doc.array();
-    for (const QJsonValue &val : std::as_const(arr) ) {
-        if (!val.isObject())
-            continue;
-        QJsonObject obj = val.toObject();
+//     QJsonArray arr = doc.array();
+//     for (const QJsonValue &val : std::as_const(arr) ) {
+//         if (!val.isObject())
+//             continue;
+//         QJsonObject obj = val.toObject();
 
-        S_UnrealVersion v;
-        v.unrealPath = obj.value("path").toString();
-        v.unrealName = obj.value("name").toString();
-        result.append(v);
-    }
+//         S_UnrealVersion v;
+//         v.unrealPath = obj.value("path").toString();
+//         v.unrealName = obj.value("name").toString();
+//         result.append(v);
+//     }
 
-    return result;
-}
+//     return result;
+// }
 
 bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
 {
@@ -214,6 +215,7 @@ bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
         distributionArray.append(p);
     }
 
+    // UNREAL ENGINE
     for (const S_UnrealVersion &v : std::as_const( generalSettingsIn.S_UnrealVersionsList )) {
         QJsonObject obj;
 
@@ -228,11 +230,6 @@ bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
     generalObj["pluginPath"] = generalSettingsIn.S_LastPlugin.pluginPath ;
     generalObj["pluginName"] = generalSettingsIn.S_LastPlugin.pluginName ;
     generalObj["pluginVersion"] = generalSettingsIn.S_LastPlugin.pluginVersion;
-
-    // UNREAL ENGINE
-    // generalObj["unrealPath"] = generalSettingsIn.S_UnrealVersionsList.unrealPath ;
-    // generalObj["unrealName"] = generalSettingsIn.S_UnrealVersionsList.unrealName ;
-    // generalObj["isObsolete"] = generalSettingsIn.S_UnrealVersionsList.isObsolete;
 
     // OTHERS
     generalObj["platform_list"] = platformArray;
@@ -261,74 +258,9 @@ bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
     return true;
 }
 
-// bool Data::saveSettings( const QString &plugin_dist_path)
-// {
-//     const QString folderPath = getJasonFilePath( getJsonFile_SettingsName() );
-
-//     QJsonArray settings;
-
-//     QJsonArray settings_General;
-
-//     QJsonObject objectSettings, objectGeneral;
-
-
-//     objectGeneral["plugin_dist_path"] = plugin_dist_path ;
-
-
-//     settings_General.append( objectGeneral );
-//     objectSettings["settings_general"] = settings_General ;
-
-//     settings.append(objectSettings);
-
-
-//     QJsonDocument doc(settings);
-
-//     QFile file(folderPath);
-
-//     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-//         // gérer l'erreur (message, qWarning, etc.)
-
-//         return false;
-//     }
-
-//     file.write(doc.toJson(QJsonDocument::Indented));
-//     file.close();
-
-//     return true;
-// }
-
-void Data::saveUnrealVersions(QList<S_UnrealVersion> unrealVersions)
-{
-    const QString filePath = getJasonFilePath( getJsonFile_UnrealVersionName() ) ;
-
-    QJsonArray arr;
-
-    for (const S_UnrealVersion &v : std::as_const( unrealVersions )) {
-        QJsonObject obj;
-
-        obj["path"] = v.unrealPath;
-        obj["name"] = v.unrealName;
-        arr.append(obj);
-    }
-
-    QJsonDocument doc(arr);
-
-    QFile file(filePath);
-    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
-        return; // gérer l’erreur comme tu veux
-
-    file.write(doc.toJson(QJsonDocument::Indented));
-    file.close();
-}
-
 QString Data::getJsonFile_SettingsName() const
 {
     return jsonFile_SettingsName;
-}
-
-QString Data::getJsonFile_UnrealVersionName() const
-{
-    return jsonFile_UnrealVersionName;
 }
 
 void Data::openLink(E_Reseaux reseaux) const

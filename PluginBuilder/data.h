@@ -49,13 +49,9 @@ public:
 
     // LOAD DATA
     S_GeneralSettings loadGeneralSettings( const QString &filePath = "" );
-    // QList<QString> loadSettings( const QString &filePath );
-    QList<S_UnrealVersion> loadUnrealVersions( const QString &filePath );
 
     // SAVE DATA
     bool saveGeneralSettings( const S_GeneralSettings &generalSettingsIn);
-    // bool saveSettings( const QString &plugin_dist_path );
-    void saveUnrealVersions(QList<S_UnrealVersion> unrealVersions);
 
     QString getJsonFile_SettingsName() const ;
     QString getJsonFile_UnrealVersionName() const;
@@ -69,7 +65,6 @@ public:
 
 private :
     QString jsonFile_SettingsName = "settings.json";
-    QString jsonFile_UnrealVersionName = "unreal_versions.json";
     float softwareVersion = 0.7;
 
     QList<QString> notificationNames;
