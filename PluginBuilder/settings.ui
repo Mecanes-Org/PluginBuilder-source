@@ -436,7 +436,7 @@ QLabel , QCheckBox{
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="text">
-                 <string>Zip for FAB distribution</string>
+                 <string>Prepare build for Fab distribution</string>
                 </property>
                </widget>
               </item>

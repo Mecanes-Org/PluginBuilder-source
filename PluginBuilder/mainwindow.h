@@ -59,7 +59,6 @@ signals:
 private:
     Ui::MainWindow *ui;
 
-    // QList<S_UnrealVersion> unrealVersions;
     QList<QCheckBox*> unrealVersionsChecked;
     QString runUatFilePath;
 

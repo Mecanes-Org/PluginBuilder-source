@@ -28,41 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     runUatFilePath = R"(\Engine\Build\BatchFiles\RunUAT.bat)";
 
-    // UNREAL VERSION -
-    // if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
-    //     unrealVersions = data.loadUnrealVersions( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) );
-
-    //     for (const S_UnrealVersion &val : std::as_const( unrealVersions ) ) {
-    //         QCheckBox *check = new QCheckBox(val.unrealName, this);
-    //         check->setCursor( QCursor(Qt::PointingHandCursor) );
-
-    //         // SI C EST OBSELETE ALORS UPDATE THE COLOR
-    //         if( val.isObsolete ){
-    //             check->setStyleSheet(
-
-    //                 "QCheckBox {"
-    //                     "color: #BB4D1A;"
-    //                 "}"
-
-    //                 "QCheckBox::indicator {"
-    //                      "border-style: solid;"
-    //                      "border-width: 1px;"
-    //                      "border-color: #BB4D1A;"
-    //                      "color: #BB4D1A;"
-    //                 "}"
-
-    //                 );
-
-    //         }
-
-    //         // Ajouter le checkbox dans le layout du scrollArea
-    //         if (ui->scrollAreaWidgetContents_UE5->layout()) {
-    //             ui->scrollAreaWidgetContents_UE5->layout()->addWidget(check);
-    //         }
-    //     }
-    // }
-
-    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_UnrealVersionName() ) ) ){
+    if( data.getValidFileExist( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ) ){
 
         for (const S_UnrealVersion &val : std::as_const( generalSettings.S_UnrealVersionsList ) ) {
             QCheckBox *check = new QCheckBox(val.unrealName, this);
@@ -470,8 +436,6 @@ bool MainWindow::isValidIndex(int &index, int arraySize)
 }
 
 
-
-
 void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
 {
     // unrealVersions = newUnrealVersions;
@@ -537,11 +501,6 @@ void MainWindow::clearLayout(QLayout *layout)
         delete item;
     }
 }
-
-// QList<S_UnrealVersion> MainWindow::getUnrealVersions()
-// {
-//     return unrealVersions;
-// }
 
 
 void MainWindow::on_pushButton_findPlugin_clicked()
