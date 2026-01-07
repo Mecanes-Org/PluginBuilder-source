@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QCheckBox>
+#include <QtZlib/zlib.h>
 
 #include "data.h"
 

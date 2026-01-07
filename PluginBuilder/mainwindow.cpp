@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
     // UI - INIT
     ui->label_pluginPath->setText(
         generalSettings.S_LastPlugin.pluginPath.isEmpty()
-            ? QString()
+            ? QString("Plugin link")
             : generalSettings.S_LastPlugin.pluginPath
         );
 
