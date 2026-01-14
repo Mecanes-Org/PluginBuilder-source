@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QCheckBox>
+#include <QtZlib/zlib.h>
 
 #include "data.h"
 
@@ -26,7 +27,8 @@ public:
     bool canBuild();
     void prepareToBuild();
     void startBuild( const QString &engineDir, const QString &pluginPath, QString &outputDir, const QString &unrealVersion, const QString &pluginName, const QString &pluginVersion);
-    void postBuild( QString outputDir );
+    void postBuild( QString outputDir, QString zipFileName );
+    void zipFileExtern(const QString &filePath, const QString& zipFileName);
 
     bool isValidIndex(int &index, int arraySize);
 
@@ -38,7 +40,8 @@ public:
     void setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions);
 
     // NOTIFICATION
-    void showBuildNotification( const bool &success, const QString &unrealVersion, const QString &text = "" );
+    void showBuildNotification( const bool &success = false, const QString &unrealVersion = "", const QString &text = "" );
+
 
 private slots:
     void on_pushButton_findPlugin_clicked();

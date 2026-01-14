@@ -102,9 +102,9 @@ QLabel , QCheckBox{
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-102</y>
+            <y>-82</y>
             <width>586</width>
-            <height>486</height>
+            <height>466</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -387,7 +387,13 @@ QLabel , QCheckBox{
              <property name="minimumSize">
               <size>
                <width>500</width>
-               <height>130</height>
+               <height>110</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>110</height>
               </size>
              </property>
              <property name="frameShape">
@@ -430,7 +436,7 @@ QLabel , QCheckBox{
               <item>
                <widget class="QCheckBox" name="checkBox_FabDistribution">
                 <property name="enabled">
-                 <bool>false</bool>
+                 <bool>true</bool>
                 </property>
                 <property name="cursor">
                  <cursorShape>PointingHandCursor</cursorShape>
@@ -438,15 +444,8 @@ QLabel , QCheckBox{
                 <property name="text">
                  <string>Prepare build for Fab distribution</string>
                 </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QCheckBox" name="checkBox_DeleteBAndInter">
-                <property name="cursor">
-                 <cursorShape>PointingHandCursor</cursorShape>
-                </property>
-                <property name="text">
-                 <string>Delete the Binaries and Intermediate folders</string>
+                <property name="checked">
+                 <bool>true</bool>
                 </property>
                </widget>
               </item>

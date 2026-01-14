@@ -929,9 +929,15 @@ QScrollBar::handle:vertical:hover {
                   <property name="toolTip">
                    <string>Plugin link</string>
                   </property>
+                  <property name="toolTipDuration">
+                   <number>-2</number>
+                  </property>
                   <property name="styleSheet">
-                   <string notr="true">border-color: rgb(115, 115, 115);
-background-color: #1D293D;</string>
+                   <string notr="true">QLabel#label_pluginPath{
+	border-color: rgb(115, 115, 115);
+	background-color: #1D293D;
+	color: rgba(255, 255, 255, 0.7)
+}</string>
                   </property>
                   <property name="text">
                    <string notr="true">Plugin link</string>

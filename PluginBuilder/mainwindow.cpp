@@ -84,7 +84,7 @@ MainWindow::MainWindow(QWidget *parent)
     // UI - INIT
     ui->label_pluginPath->setText(
         generalSettings.S_LastPlugin.pluginPath.isEmpty()
-            ? QString()
+            ? QString("Plugin link")
             : generalSettings.S_LastPlugin.pluginPath
         );
 
@@ -291,6 +291,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     QFileInfo runUatFolderPath(runUatPathComplete);
 
     outputDir = outputDir + pluginName + "_" + unrealVersion + "_" + pluginVersion;
+    QString zipFileName =  pluginName + "_" + unrealVersion + "_" + pluginVersion;
 
     // qDebug() << QDir::toNativeSeparators(runUatPathComplete);
     // qDebug() << "-Plugin=" + QDir::toNativeSeparators( pluginPath );
@@ -359,7 +360,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
     // STDOUT
     QObject::connect(proc,
                      QOverload<int, QProcess::ExitStatus>::of(&QProcess::finished),
-                     [this, unrealVersion, proc, outputDir](int exitCode, QProcess::ExitStatus status) {
+                     [this, unrealVersion, proc, outputDir, zipFileName](int exitCode, QProcess::ExitStatus status) {
 
                          bool ok = (status == QProcess::NormalExit && exitCode == 0);
 
@@ -380,7 +381,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
                          proc->deleteLater();
 
                          if( ok ){
-                            postBuild( outputDir );
+                            postBuild( outputDir, zipFileName );
                          }
 
 
@@ -408,7 +409,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
 }
 
-void MainWindow::postBuild( QString outputDir )
+void MainWindow::postBuild( QString outputDir, QString zipFileName )
 {
     if( generalSettings.distribution.length() < 1 ){
         return;
@@ -419,6 +420,8 @@ void MainWindow::postBuild( QString outputDir )
     if( dir.exists( outputDir + "/Intermediate" ) ){
         dir.setPath( outputDir + "/Intermediate" );
         dir.removeRecursively();
+
+
     }
 
     if( dir.exists( outputDir + "/Binaries" ) ){
@@ -427,8 +430,70 @@ void MainWindow::postBuild( QString outputDir )
     };
 
     // ZIP
+    zipFileExtern(outputDir, zipFileName);
 
 }
+
+void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileName)
+{
+    if (!QFile::exists(filePath)) {
+        qWarning() << "Fichier/dossier introuvable:" << filePath;
+        return;
+    }
+
+    QString program = QCoreApplication::applicationDirPath() + "/zipper.exe";
+
+    if (!QFile::exists(program)) {
+        qWarning() << "zipper.exe introuvable:" << program;
+        return;
+    }
+
+    QString outputZip = QDir::toNativeSeparators(
+        QFileInfo(filePath).absolutePath() + "/" + zipFileName + ".zip");
+
+    QStringList args;
+    args << filePath << outputZip;
+
+    QProcess process;
+    process.start(program, args);
+
+    if (!process.waitForFinished()) {
+        qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
+        qWarning() << process.errorString();
+        return;
+    }
+
+    // RETOUR DU ZIPPER
+    int exitCode = process.exitCode();
+    QString message = "Impossible de supprimer le dossier : " + filePath;
+
+    if (exitCode == 0) {
+        // ici tu es sûr que zipper s'est terminé correctement
+        QDir dirToRemove(filePath);
+        if (dirToRemove.exists()) {
+            if (dirToRemove.removeRecursively()) {
+                message = tr("Successfully zipped directory %1").arg(zipFileName);
+                showBuildNotification(true, "", message);
+            }else{
+                message = tr("Cannot delete folder %1").arg(zipFileName);
+                showBuildNotification(false, "", message);
+            };
+        } else {
+            QFile fileToRemove(filePath);
+            if (!fileToRemove.remove()) {
+                message = tr("Cannot delete file %1").arg(zipFileName);
+                showBuildNotification(false, "", message);
+            }
+        }
+    }
+
+    // qDebug() << "Exit code:" << process.exitCode();
+    // qDebug() << "Stdout:" << process.readAllStandardOutput();
+    // qDebug() << "Stderr:" << process.readAllStandardError();
+
+    // qDebug() << "Debug - Archive" << outputZip;
+}
+
 
 bool MainWindow::isValidIndex(int &index, int arraySize)
 {
@@ -457,20 +522,23 @@ void MainWindow::setUnrealVersions(QList<S_UnrealVersion> newUnrealVersions)
 
 void MainWindow::showBuildNotification(const bool &success, const QString &unrealVersion, const QString &text)
 {
-    bool enabledBuildNotif = false;
+    // bool enabledBuildNotif = false;
 
-    foreach (QString text , generalSettings.notifications) {
-        enabledBuildNotif = ( text.toLower() == "build" );
-    }
+    // foreach (QString text , generalSettings.notifications) {
+    //     enabledBuildNotif = ( text.toLower() == "build" );
+    // }
 
-    if( !enabledBuildNotif ){
-        // qDebug() << "NO NOTIF";
-        return;
-    }
+    // if( !enabledBuildNotif ){
+    //     // qDebug() << "NO NOTIF";
+    //     return;
+    // }
 
 
     QLabel *textToShow = new QLabel(this);
-    textToShow->setText( "[ " + unrealVersion + " ]"  );
+
+    if( !unrealVersion.isEmpty() ){
+        textToShow->setText( "[ " + unrealVersion + " ]"  );
+    }
 
     if( success ){
         textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build Success" : text ) );
