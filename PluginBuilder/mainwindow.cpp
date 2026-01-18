@@ -436,15 +436,22 @@ void MainWindow::postBuild( QString outputDir, QString zipFileName )
 
 void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileName)
 {
+
+    QString message = "Impossible de supprimer le dossier : " + filePath;
+
     if (!QFile::exists(filePath)) {
-        qWarning() << "Fichier/dossier introuvable:" << filePath;
+        //qWarning() << "Fichier/dossier introuvable:" << filePath;
+        message = tr("File/folder not found %1").arg(filePath);
+        showBuildNotification(false, "", message);
         return;
     }
 
     QString program = QCoreApplication::applicationDirPath() + "/zipper.exe";
 
     if (!QFile::exists(program)) {
-        qWarning() << "zipper.exe introuvable:" << program;
+        // qWarning() << "zipper.exe introuvable:" << program;
+        message = tr("zipper.exe not found: %1").arg(program);
+        showBuildNotification(false, "", message);
         return;
     }
 
@@ -458,14 +465,16 @@ void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileNa
     process.start(program, args);
 
     if (!process.waitForFinished()) {
-        qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
-        qWarning() << process.errorString();
+        // qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
+        // qWarning() << process.errorString();
+
+        message = tr("The zipper process could not be completed successfully.").arg( process.errorString() );
+        showBuildNotification(false, "", message);
         return;
     }
 
     // RETOUR DU ZIPPER
     int exitCode = process.exitCode();
-    QString message = "Impossible de supprimer le dossier : " + filePath;
 
     if (exitCode == 0) {
         // ici tu es sûr que zipper s'est terminé correctement
