@@ -84,7 +84,7 @@ QLineEdit:focus{
 
 QLineEdit:disabled{
     background-color: #1F2937;
-    color: #6B7280;
+    color: #a8afbd;
     border-color: #374151;
 }
 
@@ -443,12 +443,6 @@ Settings QTabBar::tab:selected {
 Settings QTabBar::tab:hover {
     background-color: #374151;
     color: #E5E7EB;
-}
-
-Settings QScrollArea, 
-Settings QLabel, 
-Settings QCheckBox{
-    border: none;
 }
 
 Settings QFrame {

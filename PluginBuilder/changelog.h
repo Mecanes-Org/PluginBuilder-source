@@ -15,6 +15,8 @@ public:
     explicit ChangeLog(QWidget *parent = nullptr);
     ~ChangeLog();
 
+private slots:
+
 private:
     Ui::ChangeLog *ui;
 };
