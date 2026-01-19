@@ -4,7 +4,19 @@
 #include <QLocale>
 #include <QTranslator>
 
+#include <QFile>
+#include <QTextStream>
+
 #include "loadingwindow.h"
+
+static void applyDarkTheme(QApplication& app)
+{
+    QFile f(":/themes/theme_dark.qss"); // si tu le mets dans un .qrc
+    if (f.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QTextStream ts(&f);
+        app.setStyleSheet(ts.readAll());
+    }
+}
 
 int main(int argc, char *argv[])
 {
@@ -19,6 +31,10 @@ int main(int argc, char *argv[])
             break;
         }
     }
+
+    app.setStyle("Fusion");
+    applyDarkTheme(app);
+
 
     LoadingWindow loading;
 

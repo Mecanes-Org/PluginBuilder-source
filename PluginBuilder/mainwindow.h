@@ -56,6 +56,8 @@ private slots:
 
     void on_actioninfos_triggered();
 
+    void on_actionChangelog_triggered();
+
 signals:
     void buildFinished(bool success, int exitCode, const QString &logMessage);
 

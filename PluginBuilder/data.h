@@ -8,7 +8,7 @@ struct S_UnrealVersion
 {
     QString unrealPath;
     QString unrealName;
-    bool isObsolete;
+    bool isObsolete = false;
 };
 
 struct S_LastPlugin

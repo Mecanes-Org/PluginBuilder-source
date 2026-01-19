@@ -14,6 +14,7 @@
 #include "unrealversions.h"
 #include "settings.h"
 #include "aboutus.h"
+#include "changelog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -664,5 +665,12 @@ void MainWindow::on_actioninfos_triggered()
 {
     AboutUs aboutUs(this);
     aboutUs.exec();
+}
+
+
+void MainWindow::on_actionChangelog_triggered()
+{
+    ChangeLog changelog;
+    changelog.exec();
 }
 

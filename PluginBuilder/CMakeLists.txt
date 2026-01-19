@@ -42,6 +42,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
         ${app_icon_resource_windows}
         aboutus.h aboutus.cpp aboutus.ui
+        changelog.h changelog.cpp changelog.ui
+
 
     )
 # Define target properties for Android with Qt 6 as:

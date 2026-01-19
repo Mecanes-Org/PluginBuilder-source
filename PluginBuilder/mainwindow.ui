@@ -499,68 +499,7 @@
     <normaloff>:/resources/images/logo/PluginBuilder.png</normaloff>:/resources/images/logo/PluginBuilder.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">QWidget{
-	background-color: #030712;
-}
-QMenuBar,  QStatusBar{
-	background-color: #101828;
-}
-
-QMenuBar::item:selected{
-	color: #4198EF;
-}
-
-QScrollArea{
-	border: none;
-}
-
-QLabel#label_log{
-	color:  rgba(255, 255, 255, .75);
-}
-
-QLabel{
-	background-color:  none;
-}
-
-QCheckBox::indicator {
-    width: 16px;
-    height: 16px; 
-    border: 1px solid #4198EF;
-}
-
-QCheckBox::indicator:checked{
-	image: url(:/resources/images/check-icon.png);
-}
-
-QCheckBox::indicator:disabled{
-	border: 1px solid rgb(58, 58, 58);
-}
-
-QLineEdit{
-	background-color:  rgba(255, 255, 255, .1 );
-	color: rgba(255, 255, 255, .8 );
-}
-
-QLabel#label_pluginPath{
-	border: 1px solid #E7E5E4 ;
-	border-radius: 2px;
-}
-
-QScrollBar:vertical {
-    background: transparent;
-    min-height: 40px;
-    width: 13px;
-}
-
-QScrollBar::handle:vertical {
-    background: #101828; 
-	min-height: 40px;
-}
-
-QScrollBar::handle:vertical:hover {
-    background: #1D2939; 
-}
-</string>
+   <string notr="true"/>
   </property>
   <property name="documentMode">
    <bool>false</bool>
@@ -587,8 +526,7 @@ QScrollBar::handle:vertical:hover {
          </size>
         </property>
         <property name="styleSheet">
-         <string notr="true">background-color: #020618;
-</string>
+         <string notr="true"/>
         </property>
         <property name="frameShape">
          <enum>QFrame::Shape::StyledPanel</enum>
@@ -615,6 +553,9 @@ QScrollBar::handle:vertical:hover {
                <family>Roboto</family>
                <pointsize>18</pointsize>
               </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Unreal Versions</string>
@@ -646,9 +587,6 @@ QScrollBar::handle:vertical:hover {
                <width>16777215</width>
                <height>300</height>
               </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
              </property>
              <property name="title">
               <string>UE5</string>
@@ -697,7 +635,7 @@ QScrollBar::handle:vertical:hover {
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>177</width>
+                   <width>175</width>
                    <height>16</height>
                   </rect>
                  </property>
@@ -706,6 +644,9 @@ QScrollBar::handle:vertical:hover {
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true"/>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_3">
                   <property name="spacing">
@@ -785,7 +726,7 @@ QScrollBar::handle:vertical:hover {
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>159</width>
+                   <width>157</width>
                    <height>16</height>
                   </rect>
                  </property>
@@ -802,10 +743,7 @@ QScrollBar::handle:vertical:hover {
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QLabel{
-	color: rgba(255, 255, 255, 0.85);
-	font: 500 9pt &quot;Rockwell&quot;;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_10">
                   <property name="spacing">
@@ -840,6 +778,9 @@ QScrollBar::handle:vertical:hover {
       </item>
       <item>
        <widget class="QFrame" name="frame_build">
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
         <property name="frameShape">
          <enum>QFrame::Shape::StyledPanel</enum>
         </property>
@@ -870,7 +811,7 @@ QScrollBar::handle:vertical:hover {
               <bool>false</bool>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: #101828;</string>
+              <string notr="true"/>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -889,6 +830,9 @@ QScrollBar::handle:vertical:hover {
                   <family>Roboto</family>
                   <pointsize>18</pointsize>
                  </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Plugin Configuration</string>
@@ -933,11 +877,7 @@ QScrollBar::handle:vertical:hover {
                    <number>-2</number>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QLabel#label_pluginPath{
-	border-color: rgb(115, 115, 115);
-	background-color: #1D293D;
-	color: rgba(255, 255, 255, 0.7)
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string notr="true">Plugin link</string>
@@ -984,13 +924,7 @@ QScrollBar::handle:vertical:hover {
                    <cursorShape>PointingHandCursor</cursorShape>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">QPushButton{ 
-	background-color:  #1D293D;
-}
-
-QPushButton:disabled{ 
-	background-color: #0F172B; 
-}</string>
+                   <string notr="true"/>
                   </property>
                   <property name="text">
                    <string/>
@@ -1089,6 +1023,9 @@ QPushButton:disabled{
                   <property name="toolTip">
                    <string/>
                   </property>
+                  <property name="styleSheet">
+                   <string notr="true"/>
+                  </property>
                   <property name="text">
                    <string/>
                   </property>
@@ -1107,6 +1044,9 @@ QPushButton:disabled{
               </item>
               <item alignment="Qt::AlignmentFlag::AlignRight">
                <widget class="QPushButton" name="pushButton_build">
+                <property name="enabled">
+                 <bool>true</bool>
+                </property>
                 <property name="sizePolicy">
                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                   <horstretch>0</horstretch>
@@ -1129,13 +1069,7 @@ QPushButton:disabled{
                  <cursorShape>PointingHandCursor</cursorShape>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">QPushButton{ 
-	background-color:  #1D293D;
-}
-
-QPushButton:disabled{ 
-	background-color: #0F172B; 
-}</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Build</string>
@@ -1169,7 +1103,7 @@ QPushButton:disabled{
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color:  #101828;</string>
+              <string notr="true"/>
              </property>
              <property name="frameShape">
               <enum>QFrame::Shape::StyledPanel</enum>
@@ -1215,8 +1149,8 @@ QPushButton:disabled{
                   <rect>
                    <x>0</x>
                    <y>0</y>
-                   <width>738</width>
-                   <height>402</height>
+                   <width>736</width>
+                   <height>400</height>
                   </rect>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_9">
@@ -1316,9 +1250,10 @@ QPushButton:disabled{
      <cursorShape>PointingHandCursor</cursorShape>
     </property>
     <property name="title">
-     <string>About Us</string>
+     <string>Infos</string>
     </property>
     <addaction name="actioninfos"/>
+    <addaction name="actionChangelog"/>
    </widget>
    <addaction name="menuSettings"/>
    <addaction name="menuAbout_Us"/>
@@ -1361,7 +1296,12 @@ QPushButton:disabled{
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>Infos</string>
+    <string>About-us</string>
+   </property>
+  </action>
+  <action name="actionChangelog">
+   <property name="text">
+    <string>Changelog</string>
    </property>
   </action>
  </widget>
