@@ -29,45 +29,7 @@
    <string/>
   </property>
   <property name="styleSheet">
-   <string notr="true">QFrame#frame_containerUE{
-	border: none;
-	border-bottom: 1px solid rgba(255, 255, 255, 100);
-}
-
-
-QScrollArea{
-	border: none; 
-	background-color: transparent;
-}
-
-QFrame#frame_ue{
-	background-color: #101828;
-}
-
-QLabel#label_pluginPath{
-	border: 1px solid #E7E5E4 ;
-	border-radius: 2px;
-	border-color: rgb(115, 115, 115);
-	background-color: #1D293D;
-	color: rgba(255, 255, 255, .5);
-}
-
-QLineEdit#lineEdit_UE_versionName{
-	border: none;
-	border-bottom: 1px solid #E7E5E4 ;
-	background-color:  rgba(255, 255, 255,  10);
-	border-radius: 5px;
-}
-
-QPushButton{ 
-	background-color: #1D293D;
-}
-
-QPushButton:disabled{ 
-	background-color: #0F172B; 
-}
-
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -95,7 +57,7 @@ QPushButton:disabled{
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>674</width>
+           <width>670</width>
            <height>16</height>
           </rect>
          </property>

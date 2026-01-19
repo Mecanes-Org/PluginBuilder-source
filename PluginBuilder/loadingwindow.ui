@@ -35,7 +35,7 @@
    <string>LoadingWindow</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #020618;</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">
@@ -127,18 +127,7 @@ background-position: center;</string>
         </size>
        </property>
        <property name="styleSheet">
-        <string notr="true">QProgressBar {
-	 border: 0px;
-     border-radius: 5px;
-     background-color: rgba(255, 255, 255, .3);
-	 padding: 2px;
- }
-
- QProgressBar::chunk {
-     background-color:  #3083ff;
-     border-radius: 5px;
- }
-</string>
+        <string notr="true"/>
        </property>
        <property name="value">
         <number>21</number>
@@ -364,7 +353,7 @@ background-position: center;</string>
         </font>
        </property>
        <property name="styleSheet">
-        <string notr="true">color: white</string>
+        <string notr="true"/>
        </property>
        <property name="text">
         <string>Loading...</string>

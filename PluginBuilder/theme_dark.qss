@@ -1,0 +1,496 @@
+/* ============================================
+   PLUGIN BUILDER - STYLESHEET
+   Enhanced Color Palette & Modern Design
+   ============================================ */
+
+/* ============================================
+   GLOBAL STYLES
+   ============================================ */
+QWidget{
+    background-color: #030712;
+    color: #E5E7EB;
+}
+
+QMenuBar, QStatusBar{
+    background-color: #0F1629;
+    color: #E5E7EB;
+}
+
+QMenuBar::item:selected{
+    color: #60A5FA;
+    background-color: #1A2332;
+}
+
+QScrollArea{
+    border: none;
+    background-color: transparent;
+}
+
+QLabel{
+    background-color: none;
+    color: #E5E7EB;
+}
+
+QLabel#label_log{
+    color: rgba(229, 231, 235, .85);
+}
+
+/* ============================================
+   CHECKBOX STYLES
+   ============================================ */
+QCheckBox {
+    color: #E5E7EB;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px; 
+    border: 2px solid #3B82F6;
+    border-radius: 3px;
+    background-color: #0F1629;
+}
+
+QCheckBox::indicator:hover {
+    border-color: #60A5FA;
+    background-color: #1A2332;
+}
+
+QCheckBox::indicator:checked{
+    image: url(:/resources/images/check-icon.png);
+    background-color: #132154;
+    border-color: #3B82F6;
+}
+
+QCheckBox::indicator:disabled{
+    border: 2px solid #374151;
+    background-color: #1F2937;
+}
+
+/* ============================================
+   LINE EDIT STYLES
+   ============================================ */
+QLineEdit{
+    background-color: #0F1629;
+    color: #E5E7EB;
+    border: 1px solid #374151;
+    border-radius: 4px;
+    padding: 6px 10px;
+}
+
+QLineEdit:focus{
+    border-color: #3B82F6;
+    background-color: #1A2332;
+}
+
+QLineEdit:disabled{
+    background-color: #1F2937;
+    color: #6B7280;
+    border-color: #374151;
+}
+
+/* ============================================
+   SCROLLBAR STYLES
+   ============================================ */
+QScrollBar:vertical {
+    background: transparent;
+    width: 12px;
+    margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+    background: #374151;
+    min-height: 30px;
+    border-radius: 6px;
+    margin: 2px;
+}
+
+QScrollBar::handle:vertical:hover {
+    background: #4B5563;
+}
+
+QScrollBar::handle:vertical:pressed {
+    background: #60A5FA;
+}
+
+QScrollBar::add-line:vertical,
+QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+
+/* ============================================
+   PUSH BUTTON STYLES
+   ============================================ */
+QPushButton{
+    background-color: #1A2332;
+    color: #E5E7EB;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-weight: 500;
+}
+
+QPushButton:hover{
+    background-color: #2563EB;
+    border-color: #3B82F6;
+}
+
+QPushButton:pressed{
+    background-color: #1E40AF;
+    border-color: #2563EB;
+}
+
+QPushButton:disabled{
+    background-color: #1F2937;
+    color: #6B7280;
+    border-color: #374151;
+}
+
+
+
+/* ============================================
+   LOADING WINDOW
+   ============================================ */
+#LoadingWindow{
+    background-color: #030712;
+}
+
+#label_loadingImages{
+    background-image: url(:/resources/images/logo/plugin-builder-bg.png);
+    background-repeat: no-repeat; 
+    background-position: center;
+}
+
+#label_loadingText{
+    color: #E5E7EB;
+    font-size: 14px;
+}
+
+QProgressBar {
+    border: none;
+    border-radius: 8px;
+    background-color: #1F2937;
+    text-align: center;
+    color: #E5E7EB;
+    height: 18px;
+}
+
+QProgressBar::chunk {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:0,
+                                stop:0 #3B82F6, 
+                                stop:1 #60A5FA);
+    border-radius: 8px;
+}
+
+/* ============================================
+   MAIN WINDOW SPECIFIC
+   ============================================ */
+
+/* Frame Unreal Versions List */
+#frame_unrealVersionsList{
+    background-color: #0A0F1A;
+    border-right: 1px solid #1F2937;
+}
+
+/* Plugin Path Label */
+QLabel#label_pluginPath{
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background-color: #1A2332;
+    color: #9CA3AF;
+    padding: 0px 8px;
+}
+
+/* Find Plugin Button */
+QPushButton#pushButton_findPlugin{ 
+    background-color: #1A2332;
+    border: 1px solid #374151;
+}
+
+QPushButton#pushButton_findPlugin:hover{ 
+    background-color: #2563EB;
+    border-color: #3B82F6;
+}
+
+QPushButton#pushButton_findPlugin:pressed{ 
+    background-color: #1E40AF;
+}
+
+QPushButton#pushButton_findPlugin:disabled{ 
+    background-color: #1F2937;
+    color: #6B7280;
+}
+
+/* Build Button */
+QPushButton#pushButton_build{ 
+    background-color: #2563EB;
+    border: 1px solid #3B82F6;
+    color: #FFFFFF;
+    font-weight: 600;
+}
+
+QPushButton#pushButton_build:hover{ 
+    background-color: #3B82F6;
+    border-color: #60A5FA;
+}
+
+QPushButton#pushButton_build:pressed{ 
+    background-color: #1E40AF;
+}
+
+QPushButton#pushButton_build:disabled{ 
+    background-color: #1F2937;
+    color: #6B7280;
+    border-color: #374151;
+}
+
+/* Plugin Config Frame */
+#frame_pluginConfig{
+    background-color: #0F1629;
+    border: 1px solid #1F2937;
+    border-radius: 8px;
+}
+
+/* Log Frame */
+#frame_log{
+    background-color: #0F1629;
+    border: 1px solid #1F2937;
+    border-radius: 8px;
+}
+
+/* Notification Labels */
+#scrollAreaWidgetContents_Notification QLabel {
+    color: rgba(229, 231, 235, 0.9);
+    font: 500 9pt "Segoe UI";
+}
+
+/* ============================================
+   ABOUT US DIALOG
+   ============================================ */
+AboutUs QScrollArea QPushButton{
+    border: none;
+    background-repeat: no-repeat;
+    background-color: transparent;
+}
+
+/*
+AboutUs QScrollArea QPushButton:hover{
+    transform: scale(1.05);
+}
+*/
+
+#pushButton_unrealEngine{
+    background-image: url(:/resources/images/reseaux/unrealEngine.png);
+}
+
+#pushButton_discord{
+    background-image: url(:/resources/images/reseaux/discord.png);
+}
+
+AboutUs QPushButton#pushButton_unrealEngine:hover, AboutUs QPushButton#pushButton_discord:hover{
+    background-color: none;
+    border-color: none;
+}
+
+/* ============================================
+   CHANGELOG DIALOG
+   ============================================ */
+
+/*
+ChangeLog QFrame#frame_ChangeLog > QWidget{
+    background-color: yellow;
+    border: 1px solid red;
+}
+*/
+
+
+/* ============================================
+   UNREAL VERSIONS DIALOG
+   ============================================ */
+UnrealVersions QFrame#frame_containerUE{
+    border: none;
+    border-bottom: 1px solid #374151;
+}
+
+UnrealVersions QScrollArea{
+    border: none; 
+    background-color: transparent;
+}
+
+UnrealVersions QFrame#frame_ue{
+    background-color: #0F1629;
+    border: 1px solid #1F2937;
+    border-radius: 8px;
+    margin: 4px 0px;
+}
+
+UnrealVersions QLabel#label_pluginPath{
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background-color: #1A2332;
+    color: #9CA3AF;
+    padding: 8px 12px;
+}
+
+UnrealVersions QLineEdit#lineEdit_UE_versionName{
+    background-color: #1A2332;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    color: #E5E7EB;
+    padding: 8px 12px;
+}
+
+UnrealVersions QLineEdit#lineEdit_UE_versionName:focus{
+    border-color: #3B82F6;
+    background-color: #1F2937;
+}
+
+UnrealVersions QPushButton{ 
+    background-color: #1A2332;
+    border: 1px solid #374151;
+}
+
+UnrealVersions QPushButton:hover{ 
+    background-color: #2563EB;
+    border-color: #3B82F6;
+}
+
+UnrealVersions QPushButton:disabled{ 
+    background-color: #1F2937;
+    color: #6B7280;
+}
+
+UnrealVersions QPushButton#pushButton_addUE_Version{ 
+
+    padding: 0px 10px;
+}
+
+
+/* ============================================
+   UNREAL VERSION SLOT WIDGET
+   ============================================ */
+UnrealVersionSlot QFrame#frame_ue{
+    background-color: #0F1629;
+    border: 1px solid #1F2937;
+    border-radius: 8px;
+}
+
+UnrealVersionSlot QLabel#label_pluginPath{
+    border: 1px solid #374151;
+    border-radius: 6px;
+    background-color: #1A2332;
+    color: #9CA3AF;
+    padding: 8px 12px;
+}
+
+UnrealVersionSlot QLineEdit#lineEdit_UE_versionName{
+    background-color: #1A2332;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    color: #E5E7EB;
+    padding: 8px 12px;
+}
+
+UnrealVersionSlot QLineEdit#lineEdit_UE_versionName:focus{
+    border-color: #3B82F6;
+    background-color: #1F2937;
+}
+
+UnrealVersionSlot QPushButton{ 
+    background-color: #1A2332;
+    border: 1px solid #374151;
+}
+
+UnrealVersionSlot QPushButton:hover{ 
+    background-color: #DC2626;
+    border-color: #EF4444;
+}
+
+UnrealVersionSlot QPushButton#pushButton_find:hover{ 
+    background-color: #2563EB;
+    border-color: #3B82F6;
+}
+
+UnrealVersionSlot QPushButton#pushButton_delete:hover{ 
+    background-color: #DC2626;
+    border-color: #EF4444;
+}
+
+UnrealVersionSlot QPushButton:disabled{ 
+    background-color: #1F2937;
+    color: #6B7280;
+}
+
+
+/* ============================================
+   SETTINGS DIALOG
+   ============================================ */
+Settings QTabBar::tab {
+    background-color: #1A2332;
+    color: #9CA3AF;
+    padding: 5px 10px;
+    border: 1px solid #374151;
+    border-bottom: none;
+    border-top-left-radius: 6px;
+    border-top-right-radius: 6px;
+}
+
+Settings QTabBar::tab:selected {
+    background-color: #2563EB;
+    color: #FFFFFF;
+    border-color: #3B82F6;
+}
+
+Settings QTabBar::tab:hover {
+    background-color: #374151;
+    color: #E5E7EB;
+}
+
+Settings QScrollArea, 
+Settings QLabel, 
+Settings QCheckBox{
+    border: none;
+}
+
+Settings QFrame {
+    background-color: #0F1629;
+    border: 1px solid #1F2937;
+    border-radius: 8px;
+}
+
+Settings QLineEdit{
+    background-color: #1A2332;
+    border: 1px solid #374151;
+    border-radius: 6px;
+    padding: 0px 8px;
+    color: #E5E7EB;
+}
+
+Settings QLineEdit:focus{
+    border-color: #3B82F6;
+    background-color: #1F2937;
+}
+
+Settings QPushButton{ 
+    background-color: #1A2332;
+    border: 1px solid #374151;
+}
+
+Settings QPushButton:hover{ 
+    background-color: #2563EB;
+    border-color: #3B82F6;
+}
+
+Settings QPushButton:disabled{ 
+    background-color: #1F2937;
+    color: #6B7280;
+}
+
+Settings QLabel, 
+Settings QCheckBox{
+    background-color: none;
+    color: #E5E7EB;
+}
+
+Settings QLabel{
+    border: none;
+}

@@ -32,37 +32,7 @@
    <string>Settings</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">QTabBar::tab:selected {
-  background: #314158; 
-} 
-
-QScrollArea, QLineEdit, QLabel , QCheckBox{
-	border: none;
-}
-
-QFrame {
-	background-color: #101828;
-}
-
-QLineEdit{
-	border-bottom: 1px solid #E7E5E4 ;
-	background-color:  rgba(255, 255, 255, 10);
-	border-radius: 5px;
-}
-
-
-QPushButton{ 
-	background-color: #1D293D;
-}
-
-QPushButton:disabled{ 
-	background-color: #0F172B; 
-}
-
-QLabel , QCheckBox{
-	background-color: none; 
-}
-</string>
+   <string notr="true"/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -102,9 +72,9 @@ QLabel , QCheckBox{
           <property name="geometry">
            <rect>
             <x>0</x>
-            <y>-82</y>
-            <width>586</width>
-            <height>466</height>
+            <y>0</y>
+            <width>584</width>
+            <height>471</height>
            </rect>
           </property>
           <property name="sizePolicy">

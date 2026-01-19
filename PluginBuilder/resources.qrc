@@ -8,4 +8,7 @@
         <file>images/reseaux/discord.png</file>
         <file>images/reseaux/unrealEngine.png</file>
     </qresource>
+    <qresource prefix="/themes">
+        <file>theme_dark.qss</file>
+    </qresource>
 </RCC>
