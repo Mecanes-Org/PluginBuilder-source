@@ -880,7 +880,7 @@
                    <string notr="true"/>
                   </property>
                   <property name="text">
-                   <string notr="true">Plugin link</string>
+                   <string notr="true">Plugin Path</string>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::TextFormat::AutoText</enum>

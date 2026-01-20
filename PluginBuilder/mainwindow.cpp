@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
     // UI - INIT
     ui->label_pluginPath->setText(
         generalSettings.S_LastPlugin.pluginPath.isEmpty()
-            ? QString("Plugin link")
+            ? QString("Plugin Path")
             : generalSettings.S_LastPlugin.pluginPath
         );
 
@@ -126,8 +126,8 @@ S_GeneralSettings MainWindow::getGeneralSettings()
 bool MainWindow::canBuild()
 {
     QString label_pluginPath = ui->label_pluginPath->text();
-    if( label_pluginPath.isEmpty() && label_pluginPath == "Plugin link" ){
-        QMessageBox::warning(this, tr("Plugin Link"), tr("Incorrect Plugin Link"));
+    if( label_pluginPath.isEmpty() && label_pluginPath == "Plugin Path" ){
+        QMessageBox::warning(this, tr("Plugin Path"), tr("Incorrect Plugin Path"));
         return false;
     }
 
@@ -173,6 +173,11 @@ void MainWindow::prepareToBuild()
         return;
     }
 
+    if( label_pluginPath == QString("Plugin Path")){
+        QMessageBox::warning(this, tr("Plugin Path"), tr("Invalid plugin path") );
+        return;
+    }
+
     if( data.loadGeneralSettings( data.getJasonFilePath( data.getJsonFile_SettingsName() ) ).pluginDistPath.isEmpty() ){
         QMessageBox::warning(this, tr("Plugin-dist"), tr("The Plugin-dist folder could not be found."
                                                          "\n"
@@ -186,7 +191,7 @@ void MainWindow::prepareToBuild()
                                                             "\n"
                                                             "Add a version of Unreal Engine (if you don't have one)."
                                                             "\n"
-                                                            "Go to Edit > Settings > General."
+                                                            "Go to Edit > Unreal Engine."
                                                             "\n"
                                                             "Otherwise, check one of the versions in the list (on the left) of versions.")  );
         return;
