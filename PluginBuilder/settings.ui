@@ -39,6 +39,9 @@
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
     <widget class="QTabWidget" name="tabWidget">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -443,6 +446,34 @@
       <attribute name="title">
        <string>UI Theme</string>
       </attribute>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>35</y>
+         <width>551</width>
+         <height>341</height>
+        </rect>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe Print</family>
+         <pointsize>48</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>COMING SOON</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignmentFlag::AlignCenter</set>
+       </property>
+      </widget>
      </widget>
     </widget>
    </item>
@@ -467,8 +498,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
+     <x>257</x>
+     <y>470</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -483,8 +514,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
+     <x>325</x>
+     <y>470</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

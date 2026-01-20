@@ -162,7 +162,7 @@
             </column>
             <item>
              <property name="text">
-              <string>v0.7.5</string>
+              <string>v0.7.7</string>
              </property>
              <property name="font">
               <font>
@@ -185,6 +185,103 @@
                 <red>0</red>
                 <green>170</green>
                 <blue>0</blue>
+               </color>
+              </brush>
+             </property>
+             <item>
+              <property name="text">
+               <string>New</string>
+              </property>
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>170</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
+              <item>
+               <property name="text">
+                <string>Added changelog (base)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Updated Settings UI</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Updated QSS file</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Minor improvements</string>
+               </property>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>Next</string>
+              </property>
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>85</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+              <item>
+               <property name="text">
+                <string>Add notifications (software updates, pop-ups)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Add UI theme system</string>
+               </property>
+              </item>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>v0.7.5</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>10</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="background">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>0</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
                </color>
               </brush>
              </property>
@@ -294,6 +391,15 @@
                 <bold>true</bold>
                </font>
               </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>170</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
               <item>
                <property name="text">
                 <string>Added Fab build (ZIP file)</string>
@@ -318,6 +424,15 @@
                <font>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>85</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
               <item>
                <property name="text">
@@ -355,6 +470,15 @@
                 <bold>true</bold>
                </font>
               </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>170</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
               <item>
                <property name="text">
                 <string>Updated internal structure</string>
@@ -374,6 +498,15 @@
                <font>
                 <bold>true</bold>
                </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>85</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
               </property>
               <item>
                <property name="text">
