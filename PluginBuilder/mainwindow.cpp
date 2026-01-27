@@ -370,7 +370,7 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
                          bool ok = (status == QProcess::NormalExit && exitCode == 0);
 
-                         qDebug() << "Build finished, exitCode =" << exitCode << ", status =" << status;
+                         // qDebug() << "Build finished, exitCode =" << exitCode << ", status =" << status;
 
                          ui->label_log->setText(
                              ui->label_log->text()
@@ -388,12 +388,14 @@ void MainWindow::startBuild( const QString &engineDir, const QString &pluginPath
 
                          if( ok ){
                             postBuild( outputDir, zipFileName );
+                            showBuildNotification(true, unrealVersion);
+                         }else{
+                             // qDebug("Error");
+                             showBuildNotification(false, unrealVersion);
                          }
-
 
                          emit buildFinished(ok, exitCode, QString("\nBuild finished (exitCode=%1)").arg(exitCode));
 
-                         showBuildNotification(true, unrealVersion);
                      });
 
     proc->setProgram( runUatPathComplete );
@@ -557,6 +559,9 @@ void MainWindow::showBuildNotification(const bool &success, const QString &unrea
 
     if( success ){
         textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build Success" : text ) );
+        textToShow->setStyleSheet(""
+                                  "color: rgba(0, 255, 0, 0.85);"
+                                  "");
     }else{
         textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Error Build" : text ) );
         textToShow->setStyleSheet(""
