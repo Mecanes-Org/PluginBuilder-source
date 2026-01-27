@@ -208,6 +208,34 @@
               </property>
               <item>
                <property name="text">
+                <string>Updated Notifications</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="Dense1Pattern">
+                 <color alpha="255">
+                  <red>43</red>
+                  <green>56</green>
+                  <blue>46</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Minor optimization</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="Dense1Pattern">
+                 <color alpha="255">
+                  <red>43</red>
+                  <green>56</green>
+                  <blue>46</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+              <item>
+               <property name="text">
                 <string>Added changelog (base)</string>
                </property>
               </item>

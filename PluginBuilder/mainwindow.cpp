@@ -489,8 +489,8 @@ void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileNa
         QDir dirToRemove(filePath);
         if (dirToRemove.exists()) {
             if (dirToRemove.removeRecursively()) {
-                message = tr("Successfully zipped directory %1").arg(zipFileName);
-                showBuildNotification(true, "", message);
+                // message = tr("Successfully zipped directory %1").arg(zipFileName);
+                // showBuildNotification(true, "", message);
             }else{
                 message = tr("Cannot delete folder %1").arg(zipFileName);
                 showBuildNotification(false, "", message);
@@ -558,12 +558,12 @@ void MainWindow::showBuildNotification(const bool &success, const QString &unrea
     }
 
     if( success ){
-        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build Success" : text ) );
+        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build successful" : text ) );
         textToShow->setStyleSheet(""
                                   "color: rgba(0, 255, 0, 0.85);"
                                   "");
     }else{
-        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Error Build" : text ) );
+        textToShow->setText( textToShow->text() + ( text.isEmpty() ? " Build failed" : text ) );
         textToShow->setStyleSheet(""
                                  "color: rgba(255,0, 0, 0.85);"
                                  "");
