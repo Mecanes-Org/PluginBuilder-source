@@ -25,8 +25,15 @@ set(PROJECT_SOURCES
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
 
-    set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/images/logo/PluginBuilder.rc")
-    message(STATUS "RC path = ${app_icon_resource_windows}")
+    # set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/images/logo/PluginBuilder.rc")
+    # message(STATUS "RC path = ${app_icon_resource_windows}")
+
+    if(WIN32)
+      set(app_icon_resource_windows "${CMAKE_CURRENT_SOURCE_DIR}/PluginBuilder.rc")
+      if(NOT EXISTS "${app_icon_resource_windows}")
+        message(FATAL_ERROR "RC introuvable: ${app_icon_resource_windows}")
+      endif()
+    endif()
 
 
     qt_add_executable(PluginBuilder
