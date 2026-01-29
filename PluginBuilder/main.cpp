@@ -6,8 +6,10 @@
 
 #include <QFile>
 #include <QTextStream>
+#include <QDebug>
 
 #include "loadingwindow.h"
+#include "data.h"
 
 static void applyDarkTheme(QApplication& app)
 {
@@ -21,6 +23,12 @@ static void applyDarkTheme(QApplication& app)
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    app.setWindowIcon(QIcon(":/resources/images/logo/PluginBuilder.png"));
+
+
+    // Versionning
+    Data data;
+    QCoreApplication::setApplicationVersion( QString::number( data.getSoftwareVersion() ) );
 
     QTranslator translator;
     const QStringList uiLanguages = QLocale::system().uiLanguages();
@@ -32,6 +40,8 @@ int main(int argc, char *argv[])
         }
     }
 
+    // qDebug() << QCoreApplication::applicationVersion();
+
     app.setStyle("Fusion");
     applyDarkTheme(app);
 
@@ -40,10 +50,9 @@ int main(int argc, char *argv[])
 
     // 3) Fenêtre principale
     MainWindow w;
+    w.setWindowIcon(QIcon(":/resources/images/logo/PluginBuilder.png"));
 
 #ifdef QT_DEBUG
-
-    w.setWindowIcon(QIcon(":/resources/images/logo/PluginBuilder.png"));
 
     // &loading, &w; { ... }
     // - C’est une lambda (fonction anonyme C++).
