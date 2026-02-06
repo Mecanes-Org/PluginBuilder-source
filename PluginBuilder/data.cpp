@@ -25,6 +25,74 @@ Data::Data(QObject *parent)
     notificationNames.append("Popup");
 }
 
+
+void Data::restoreFontSettings()
+{
+    QSettings s;
+
+    const QString family = s.value("ui/fontFamily").toString();
+    const int pointSize  = s.value("ui/fontPointSize", -1).toInt();
+
+    if (!family.isEmpty() && pointSize > 0)
+        setGlobalFont(family, pointSize);
+}
+
+
+
+void Data::saveFontSettings(const QString& family, int pointSize, bool darkMode)
+{
+    s.beginGroup("ui");
+    s.setValue("fontFamily", family);
+    s.setValue("fontPointSize", pointSize);
+    s.setValue("darkMode", darkMode);
+    s.endGroup();
+}
+
+
+
+void Data::setGlobalFont(const QString& family, int pointSize)
+{
+    auto* app = qobject_cast<QApplication*>(QCoreApplication::instance());
+    if (!app) return;
+
+    QString qss = app->styleSheet();
+
+    const QString begin = "/*__FONT_OVERRIDE_BEGIN__*/";
+    const QString end   = "/*__FONT_OVERRIDE_END__*/";
+
+    // Enlever l'ancien bloc s'il existe
+    int b = qss.indexOf(begin);
+    int e = qss.indexOf(end);
+    if (b != -1 && e != -1 && e > b)
+        qss.remove(b, (e - b) + end.size());
+
+    // Si reset demandé => on applique le qss nettoyé (sans override)
+    if (family.isEmpty()) {
+        app->setStyleSheet(qss);
+        return;
+    }
+
+    // Sinon on ajoute le bloc override
+    qss += "\n" + begin + "\n";
+    qss += QString(
+               "QWidget {\n"
+               "  font-family: \"%1\";\n"
+               "  font-size: %2pt;\n"
+               "}\n"
+               ).arg(family).arg(pointSize);
+    qss += end + "\n";
+
+    app->setStyleSheet(qss);
+}
+
+
+void Data::resetFontSettings()
+{
+    s.remove("ui");
+    setGlobalFont();
+}
+
+
 bool Data::getValidFileExist(const QString &filePath)
 {
     return QFile::exists( filePath );
@@ -129,70 +197,6 @@ S_GeneralSettings Data::loadGeneralSettings(const QString &filePath)
 
     return result;
 }
-
-// QList<QString> Data::loadSettings(const QString &filePath)
-// {
-//     QList<QString> result;
-//     QFile file( ( filePath.isEmpty() ) ? getJasonFilePath( getJsonFile_SettingsName() ) : filePath );
-
-
-//     if (!file.open(QIODevice::ReadOnly))
-//         return result; // GERER LES ERREUR ...
-
-//     const QByteArray data = file.readAll();
-//     file.close();
-
-//     QJsonParseError err;
-//     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-//     if (err.error != QJsonParseError::NoError || !doc.isArray())
-//         return result;
-
-//     QJsonArray arr = doc.array();
-//     for (const QJsonValue &val : std::as_const(arr) ) {
-//         if (!val.isObject())
-//             continue;
-//         QJsonObject obj = val.toObject();
-
-//         QString v;
-//         v = obj.value("plugin_dist_path").toString();
-//         result.append(v);
-//     }
-
-//     return result;
-// }
-
-// QList<S_UnrealVersion> Data::loadUnrealVersions(const QString &filePath)
-// {
-
-//     QList<S_UnrealVersion> result;
-//     QFile file( ( filePath.isEmpty() ) ? getJasonFilePath( getJsonFile_UnrealVersionName() ) : filePath );
-
-
-//     if (!file.open(QIODevice::ReadOnly))
-//         return result; // GERER LES ERREUR ...
-
-//     const QByteArray data = file.readAll();
-//     file.close();
-
-//     QJsonParseError err;
-//     QJsonDocument doc = QJsonDocument::fromJson(data, &err);
-//     if (err.error != QJsonParseError::NoError || !doc.isArray())
-//         return result;
-
-//     QJsonArray arr = doc.array();
-//     for (const QJsonValue &val : std::as_const(arr) ) {
-//         if (!val.isObject())
-//             continue;
-//         QJsonObject obj = val.toObject();
-
-//         S_UnrealVersion v;
-//         v.unrealPath = obj.value("path").toString();
-//         v.unrealName = obj.value("name").toString();
-//         result.append(v);
-//     }
-
-//     return result;
-// }
 
 bool Data::saveGeneralSettings( const S_GeneralSettings &generalSettingsIn)
 {
