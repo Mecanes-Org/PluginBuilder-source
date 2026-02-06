@@ -162,7 +162,7 @@
             </column>
             <item>
              <property name="text">
-              <string>v0.7.7</string>
+              <string>v0.8</string>
              </property>
              <property name="font">
               <font>
@@ -185,6 +185,97 @@
                 <red>0</red>
                 <green>170</green>
                 <blue>0</blue>
+               </color>
+              </brush>
+             </property>
+             <item>
+              <property name="text">
+               <string>New</string>
+              </property>
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>170</green>
+                 <blue>0</blue>
+                </color>
+               </brush>
+              </property>
+              <item>
+               <property name="text">
+                <string>Updated the Zipper.exe file</string>
+               </property>
+               <property name="background">
+                <brush brushstyle="NoBrush">
+                 <color alpha="255">
+                  <red>43</red>
+                  <green>56</green>
+                  <blue>46</blue>
+                 </color>
+                </brush>
+               </property>
+              </item>
+             </item>
+             <item>
+              <property name="text">
+               <string>Next</string>
+              </property>
+              <property name="font">
+               <font>
+                <bold>true</bold>
+               </font>
+              </property>
+              <property name="foreground">
+               <brush brushstyle="SolidPattern">
+                <color alpha="255">
+                 <red>0</red>
+                 <green>85</green>
+                 <blue>255</blue>
+                </color>
+               </brush>
+              </property>
+              <item>
+               <property name="text">
+                <string>Add notifications (software updates, pop-ups)</string>
+               </property>
+              </item>
+              <item>
+               <property name="text">
+                <string>Add UI theme system</string>
+               </property>
+              </item>
+             </item>
+            </item>
+            <item>
+             <property name="text">
+              <string>v0.7.7</string>
+             </property>
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+               <bold>true</bold>
+              </font>
+             </property>
+             <property name="background">
+              <brush brushstyle="NoBrush">
+               <color alpha="255">
+                <red>0</red>
+                <green>85</green>
+                <blue>0</blue>
+               </color>
+              </brush>
+             </property>
+             <property name="foreground">
+              <brush brushstyle="Dense1Pattern">
+               <color alpha="255">
+                <red>255</red>
+                <green>255</green>
+                <blue>255</blue>
                </color>
               </brush>
              </property>

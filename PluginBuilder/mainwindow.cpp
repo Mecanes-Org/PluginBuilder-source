@@ -469,20 +469,52 @@ void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileNa
     QStringList args;
     args << filePath << outputZip;
 
+    // QProcess process;
+    // process.start(program, args);
+
+    // if (!process.waitForFinished()) {
+    //     // qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
+    //     // qWarning() << process.errorString();
+
+    //     message = tr("The zipper process could not be completed successfully.").arg( process.errorString() );
+    //     showBuildNotification(false, "", message);
+    //     return;
+    // }
+
     QProcess process;
-    process.start(program, args);
+    process.setProgram(program);
+    process.setArguments({ filePath, outputZip });
+    process.setWorkingDirectory(QCoreApplication::applicationDirPath());
+    process.setProcessChannelMode(QProcess::MergedChannels);
 
-    if (!process.waitForFinished()) {
-        // qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
-        // qWarning() << process.errorString();
+    process.start();
 
-        message = tr("The zipper process could not be completed successfully.").arg( process.errorString() );
-        showBuildNotification(false, "", message);
+    if (!process.waitForStarted(5000)) {
+        showBuildNotification(false, "", tr("Failed to start zipper: %1").arg(process.errorString()));
+        return;
+    }
+
+    if (!process.waitForFinished(-1)) {
+        showBuildNotification(false, "", tr("Zipper timeout/failed: %1").arg(process.errorString()));
         return;
     }
 
     // RETOUR DU ZIPPER
+    QString out = QString::fromLocal8Bit(process.readAll());
     int exitCode = process.exitCode();
+
+    if (process.exitStatus() == QProcess::CrashExit) {
+        showBuildNotification(false, "", tr("Zipper crashed.\n%1").arg(out));
+        return;
+    }
+
+    if (exitCode != 0) {
+        showBuildNotification(false, "", tr("Zipper error code %1.\n%2").arg(exitCode).arg(out));
+        return;
+    }
+
+
+    // RETOUR DU ZIPPER
 
     if (exitCode == 0) {
         // ici tu es sûr que zipper s'est terminé correctement

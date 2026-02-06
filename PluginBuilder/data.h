@@ -65,7 +65,7 @@ public:
 
 private :
     QString jsonFile_SettingsName = "settings.json";
-    float softwareVersion = 0.7;
+    float softwareVersion = 0.8;
 
     QList<QString> notificationNames;
 
