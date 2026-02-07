@@ -171,7 +171,7 @@ void Settings::on_buttonBox_clicked(QAbstractButton *button)
 
         // Default Value
         ui->fontComboBox->setCurrentFont( QFont());
-        ui->spinBox_TextSize->setValue(9);
+        ui->spinBox_TextSize->setValue(12);
     }
 
 }

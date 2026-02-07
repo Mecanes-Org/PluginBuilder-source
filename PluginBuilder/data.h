@@ -46,8 +46,8 @@ public:
 
     // SAVE UI SETTINGS
     void restoreFontSettings();
-    void saveFontSettings(const QString& family = "", int pointSize = 9, bool darkMode = true);
-    void setGlobalFont(const QString& family = "", int pointSize = 9);
+    void saveFontSettings(const QString& family = "", int pointSize = 12, bool darkMode = true);
+    void setGlobalFont(const QString& family = "", int pointSize = 12);
     void resetFontSettings();
 
     bool getValidFileExist(const QString &filePath);
