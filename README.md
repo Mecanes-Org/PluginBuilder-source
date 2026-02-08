@@ -38,6 +38,8 @@ This project uses the following technologies:
 - ![C++](https://img.shields.io/badge/C%2B%2B-17-blue)
 - ![CMake](https://img.shields.io/badge/CMake-Build%20System-orange)
 
+[![Plugin Builder – Installation & Full Getting Started Guide](https://cdn-icons-png.flaticon.com/256/174/174883.png)](https://youtu.be/NLb-Cm_phVU?si=P6QWwf1mRe152Eb9 "Plugin Builder – Installation & Full Getting Started Guide")
+
 ## 📚 Usage
 
 Once the application launches, the main interface appears.  
