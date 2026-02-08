@@ -79,7 +79,7 @@
             <x>0</x>
             <y>0</y>
             <width>586</width>
-            <height>475</height>
+            <height>471</height>
            </rect>
           </property>
           <property name="sizePolicy">
@@ -587,8 +587,13 @@
              <layout class="QHBoxLayout" name="horizontalLayout_9">
               <item>
                <widget class="QSpinBox" name="spinBox_TextSize">
+                <property name="font">
+                 <font>
+                  <pointsize>10</pointsize>
+                 </font>
+                </property>
                 <property name="minimum">
-                 <number>5</number>
+                 <number>10</number>
                 </property>
                </widget>
               </item>

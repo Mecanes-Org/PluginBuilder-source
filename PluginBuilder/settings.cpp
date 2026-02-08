@@ -70,7 +70,7 @@ Settings::Settings(QWidget *parent)
     QSettings s;
 
     const QString family = s.value("ui/fontFamily").toString();
-    const int pointSize  = s.value("ui/fontPointSize", -1).toInt();
+    const int pointSize  = s.value("ui/fontPointSize", 10).toInt();
 
     ui->fontComboBox->setCurrentFont( QFont(family) );
     ui->spinBox_TextSize->setValue( pointSize );
@@ -171,7 +171,10 @@ void Settings::on_buttonBox_clicked(QAbstractButton *button)
 
         // Default Value
         ui->fontComboBox->setCurrentFont( QFont());
-        ui->spinBox_TextSize->setValue(12);
+        ui->spinBox_TextSize->setValue(10);
+
+        // Fermer ma fenetre
+        this->close();
     }
 
 }
