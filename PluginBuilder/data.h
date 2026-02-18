@@ -2,6 +2,8 @@
 #define DATA_H
 
 #include <QObject>
+#include <QSettings>
+#include <QApplication>
 
 
 struct S_UnrealVersion
@@ -35,11 +37,18 @@ enum E_Reseaux{
 
 
 
+
 class Data : public QObject
 {
     Q_OBJECT
 public:
     explicit Data(QObject *parent = nullptr);
+
+    // SAVE UI SETTINGS
+    void restoreFontSettings();
+    void saveFontSettings(const QString& family = "", int pointSize = 10, bool darkMode = true);
+    void setGlobalFont(const QString& family = "", int pointSize = 10);
+    void resetFontSettings();
 
     bool getValidFileExist(const QString &filePath);
 
@@ -64,6 +73,8 @@ public:
     void openLink(E_Reseaux reseaux) const;
 
 private :
+    QSettings s;
+
     QString jsonFile_SettingsName = "settings.json";
     float softwareVersion = 0.8;
 

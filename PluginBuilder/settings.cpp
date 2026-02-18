@@ -5,11 +5,12 @@
 #include <QMessageBox>
 #include <QCheckBox>
 #include <QDir>
-
+#include <QSettings>
 
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonDocument>
+
 
 Settings::Settings(QWidget *parent)
     : QDialog(parent)
@@ -64,6 +65,15 @@ Settings::Settings(QWidget *parent)
         }
     }
 
+
+    // Font Familly
+    QSettings s;
+
+    const QString family = s.value("ui/fontFamily").toString();
+    const int pointSize  = s.value("ui/fontPointSize", 10).toInt();
+
+    ui->fontComboBox->setCurrentFont( QFont(family) );
+    ui->spinBox_TextSize->setValue( pointSize );
 
 
 }
@@ -143,6 +153,29 @@ void Settings::on_buttonBox_accepted()
         return;
     }
 
+    // UI CONFIG
+    QString fam = ui->fontComboBox->currentFont().family();
+    int basePt = ui->spinBox_TextSize->value();
+
+    // qDebug() << basePt;
+
+    data.setGlobalFont(fam, basePt );
+    data.saveFontSettings( fam, basePt);
+
+}
+
+void Settings::on_buttonBox_clicked(QAbstractButton *button)
+{
+    if(ui->buttonBox->buttonRole(button) == QDialogButtonBox::ResetRole){
+        data.resetFontSettings();
+
+        // Default Value
+        ui->fontComboBox->setCurrentFont( QFont());
+        ui->spinBox_TextSize->setValue(10);
+
+        // Fermer ma fenetre
+        this->close();
+    }
 
 }
 

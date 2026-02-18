@@ -5,6 +5,10 @@
 #include "mainwindow.h"
 
 #include <QDialog>
+#include <QFontComboBox>
+
+#include <QApplication>
+
 
 namespace Ui {
 class Settings;
@@ -25,6 +29,8 @@ private slots:
     void on_pushButton_find_plugin_dist_clicked();
 
     void on_buttonBox_accepted();
+
+    void on_buttonBox_clicked(QAbstractButton *button);
 
 private:
     Ui::Settings *ui;

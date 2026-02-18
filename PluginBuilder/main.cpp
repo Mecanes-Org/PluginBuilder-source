@@ -8,8 +8,11 @@
 #include <QTextStream>
 #include <QDebug>
 
+#include <QFontComboBox>
+
 #include "loadingwindow.h"
 #include "data.h"
+
 
 static void applyDarkTheme(QApplication& app)
 {
@@ -18,16 +21,22 @@ static void applyDarkTheme(QApplication& app)
         QTextStream ts(&f);
         app.setStyleSheet(ts.readAll());
     }
+
 }
+
 
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
     app.setWindowIcon(QIcon(":/resources/images/logo/PluginBuilder.png"));
 
+    QCoreApplication::setOrganizationName("Mecanes");
+    QCoreApplication::setApplicationName("PluginBuilder");
+
 
     // Versionning
     Data data;
+
     QCoreApplication::setApplicationVersion( QString::number( data.getSoftwareVersion() ) );
 
     QTranslator translator;
@@ -68,6 +77,9 @@ int main(int argc, char *argv[])
 
     loading.show();
 #endif
+
+
+    data.restoreFontSettings();
 
     return app.exec();
 }
