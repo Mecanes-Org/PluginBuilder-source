@@ -469,17 +469,10 @@ void MainWindow::zipFileExtern(const QString &filePath, const QString &zipFileNa
     QStringList args;
     args << filePath << outputZip;
 
-    // QProcess process;
-    // process.start(program, args);
-
-    // if (!process.waitForFinished()) {
-    //     // qWarning() << "Le processus zipper n'a pas pu se terminer correctement";
-    //     // qWarning() << process.errorString();
-
-    //     message = tr("The zipper process could not be completed successfully.").arg( process.errorString() );
-    //     showBuildNotification(false, "", message);
-    //     return;
-    // }
+    if (filePath.isEmpty() || zipFileName.isEmpty()) {
+        showBuildNotification(false, "", tr("Invalid arguments for zipper."));
+        return;
+    }
 
     QProcess process;
     process.setProgram(program);
