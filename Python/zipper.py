@@ -21,6 +21,15 @@ if __name__ == "__main__":
 
     source = sys.argv[1]
     output = sys.argv[2]
+    
+    # FIX : protection contre les valeurs None (bug PyInstaller)
+    if source is None or not isinstance(source, str):
+        sys.exit(1)
+    if output is None or not isinstance(output, str):
+        sys.exit(1)
+
+    source = source.strip()
+    output = output.strip()
 
     if not source:
         # print("Source est None")
